@@ -1,0 +1,2292 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroPath - เส้นทางอาชีพอวกาศแห่งอนาคต</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Kanit', 'sans-serif'],
+                        space: ['Orbitron', 'sans-serif'],
+                    },
+                    colors: {
+                        space: {
+                            50: '#f0f4ff',
+                            100: '#e1ebff',
+                            900: '#02040d',
+                            950: '#010206',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Premium Space Backdrop Styling */
+        body {
+            background-color: #010206;
+            background-image: 
+                radial-gradient(circle at 50% 10%, #0c1535 0%, transparent 50%),
+                radial-gradient(circle at 10% 80%, #150b24 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, #031c18 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+        
+        .glow-blue {
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.6), 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+        .glow-purple {
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.6), 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+        
+        /* Glassmorphism with slight metallic blue tint */
+        .glass {
+            background: rgba(4, 8, 20, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.12);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glass-active {
+            background: rgba(8, 14, 36, 0.85);
+            border: 1px solid rgba(59, 130, 246, 0.45);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #010206;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #101c38;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+        
+        /* Typing indicator animation */
+        .dot-flashing {
+            position: relative;
+            width: 8px;
+            height: 8px;
+            border-radius: 5px;
+            background-color: #3b82f6;
+            color: #3b82f6;
+            animation: dot-flashing 1s infinite linear alternate;
+            animation-delay: .5s;
+        }
+        .dot-flashing::before, .dot-flashing::after {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            width: 8px;
+            height: 8px;
+            border-radius: 5px;
+            background-color: #3b82f6;
+            color: #3b82f6;
+        }
+        .dot-flashing::before {
+            left: -14px;
+            animation: dot-flashing 1s infinite linear alternate;
+            animation-delay: 0s;
+        }
+        .dot-flashing::after {
+            left: 14px;
+            animation: dot-flashing 1s infinite linear alternate;
+            animation-delay: 1s;
+        }
+        @keyframes dot-flashing {
+            0% { background-color: #3b82f6; }
+            50%, 100% { background-color: rgba(59, 130, 246, 0.2); }
+        }
+
+        /* Modal Pop-up High-tech Holographic Animations with rotation */
+        @keyframes hologram-in {
+            0% { 
+                transform: scale(0.85) rotateY(30deg) rotateX(15deg) translateY(40px); 
+                opacity: 0;
+                filter: brightness(0.2) contrast(1.4) blur(10px);
+            }
+            60% {
+                filter: brightness(1.8) contrast(1.5) blur(2px);
+                opacity: 0.95;
+            }
+            100% { 
+                transform: scale(1) rotateY(0deg) rotateX(0deg) translateY(0); 
+                opacity: 1;
+                filter: brightness(1) contrast(1) blur(0px);
+            }
+        }
+        .animate-hologram {
+            animation: hologram-in 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+            perspective: 1500px;
+        }
+        
+        /* Scanline HUD effect */
+        .scanline {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(59, 130, 246, 0.08) 50%,
+                rgba(255,255,255,0)
+            );
+            background-size: 100% 16px;
+            animation: scanlines 5s linear infinite;
+        }
+        @keyframes scanlines {
+            from { background-position: 0 0; }
+            to { background-position: 0 100%; }
+        }
+
+        /* 3D rotate hover effect for cards */
+        .career-card-hover {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .career-card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.18);
+            border-color: rgba(59, 130, 246, 0.35);
+        }
+
+        /* Real Atmosphere Aura curve simulation at footer and top header */
+        .earth-glow-bottom {
+            position: fixed;
+            bottom: -300px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150%;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.22) 0%, rgba(59, 130, 246, 0.05) 50%, transparent 100%);
+            filter: blur(30px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .earth-glow-top {
+            position: fixed;
+            top: -250px;
+            left: 30%;
+            width: 80%;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at bottom, rgba(168, 85, 247, 0.12) 0%, rgba(59, 130, 246, 0.02) 60%, transparent 100%);
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-blue-600 selection:text-white">
+
+    <!-- Interactive Starfield Canvas (Realistic nebula dust background) -->
+    <canvas id="starfield" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-100"></canvas>
+
+    <!-- Real Atmosphere Aura curve backgrounds -->
+    <div class="earth-glow-bottom"></div>
+    <div class="earth-glow-top"></div>
+
+    <!-- MAIN WRAPPER -->
+    <div class="relative z-10 flex flex-col min-h-screen">
+
+        <!-- HEADER / NAVIGATION -->
+        <header class="glass sticky top-0 z-50 border-b border-blue-500/10 transition-all duration-300">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
+                        <i data-lucide="orbit" class="w-6 h-6 text-white animate-spin-slow"></i>
+                    </div>
+                    <div>
+                        <span class="font-space font-black text-2xl tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-200 to-purple-400">ASTROPATH</span>
+                        <p class="text-[9px] text-blue-400 tracking-widest uppercase">New Space Economy Portal</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-1">
+                    <button onclick="switchTab('home')" id="nav-home" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-blue-400 bg-slate-850/50 border border-blue-500/20">หน้าแรก</button>
+                    <button onclick="switchTab('careers')" id="nav-careers" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800/40">คลังอาชีพอวกาศ</button>
+                    <button onclick="switchTab('quiz')" id="nav-quiz" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800/40">วิเคราะห์ทักษะ</button>
+                    <button onclick="switchTab('simulator')" id="nav-simulator" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800/40">จำลองการฝึกอาชีพ</button>
+                    <button onclick="switchTab('advisor')" id="nav-advisor" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800/40 flex items-center gap-1.5">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-purple-400 animate-pulse"></i> ปรึกษา AI
+                    </button>
+                </nav>
+
+                <!-- CTA Button -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <button onclick="switchTab('quiz')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-medium text-sm transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg shadow-blue-500/25 flex items-center gap-2">
+                        <i data-lucide="compass" class="w-4 h-4"></i> ค้นหาเส้นทางของคุณ
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white">
+                    <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Dropdown Menu -->
+            <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800/80 bg-space-950 px-4 pt-2 pb-6 space-y-2">
+                <button onclick="switchTab('home')" class="w-full text-left px-4 py-3 rounded-lg text-base font-medium text-white bg-slate-800/50">หน้าแรก</button>
+                <button onclick="switchTab('careers')" class="w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-300">คลังอาชีพอวกาศ</button>
+                <button onclick="switchTab('quiz')" class="w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-300">วิเคราะห์ทักษะ (Quiz)</button>
+                <button onclick="switchTab('simulator')" class="w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-300">จำลองการฝึกอาชีพ</button>
+                <button onclick="switchTab('advisor')" class="w-full text-left px-4 py-3 rounded-lg text-base font-medium text-purple-400 flex items-center gap-2">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-purple-400"></i> ปรึกษาอัจฉริยะกับ AI
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+            <!-- SECTION 1: HOME PAGE -->
+            <section id="section-home" class="space-y-16 animate-fade-in">
+                <!-- Hero Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center py-6">
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-semibold tracking-wider uppercase">
+                            <i data-lucide="stars" class="w-4 h-4 text-yellow-400 animate-pulse"></i> อุตสาหกรรมอวกาศแห่งอนาคตกำลังรอคุณอยู่
+                        </div>
+                        <h1 class="font-space font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-tight">
+                            สร้างอนาคตของคุณ<br>
+                            <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500">ในอุตสาหกรรมอวกาศ</span>
+                        </h1>
+                        <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                            อีกไม่กี่ปีข้างหน้า เทคโนโลยีอวกาศจะไม่ใช่แค่เรื่องของความฝัน แต่เป็นอาชีพที่สร้างมูลค่ามหาศาล มาร่วมค้นหา คลี่คลาย และวางแผนทักษะที่โลกยุคใหม่ต้องการ พร้อมการวิเคราะห์โดย AI ส่วนบุคคล
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                            <button onclick="switchTab('quiz')" class="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:opacity-90 text-white font-semibold shadow-lg shadow-indigo-500/35 transition-all duration-300 flex items-center justify-center gap-2">
+                                <i data-lucide="rocket" class="w-5 h-5"></i> เริ่มค้นหาอาชีพของฉัน
+                            </button>
+                            <button onclick="switchTab('simulator')" class="px-8 py-4 rounded-xl glass hover:bg-slate-800/40 text-slate-200 font-semibold border border-blue-500/10 transition-all duration-300 flex items-center justify-center gap-2">
+                                ลองฝึกงานปฏิบัติจริง <i data-lucide="gamepad-2" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Right interactive planet preview -->
+                    <div class="lg:col-span-5 flex justify-center relative">
+                        <div class="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-to-tr from-purple-800/20 via-blue-900/30 to-emerald-800/20 flex items-center justify-center shadow-2xl border border-blue-500/10">
+                            <!-- Glowing ring orbits -->
+                            <div class="absolute w-[115%] h-[40%] rounded-full border-2 border-dashed border-blue-500/30 rotate-[25deg] animate-spin-slow"></div>
+                            <div class="absolute w-[130%] h-[30%] rounded-full border border-purple-500/15 rotate-[-15deg]"></div>
+                            
+                            <!-- Internal Hologram Sphere -->
+                            <div class="w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full bg-slate-950 flex flex-col items-center justify-center text-center p-6 border border-indigo-500/40 relative overflow-hidden group">
+                                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/5 to-transparent animate-pulse pointer-events-none"></div>
+                                <i data-lucide="globe-2" class="w-20 h-20 text-indigo-400 mb-4 animate-pulse"></i>
+                                <span class="font-space font-bold text-lg text-white mb-2 uppercase tracking-widest">New Space Economy</span>
+                                <p class="text-xs text-slate-400 leading-relaxed">มูลค่าเศรษฐกิจอวกาศโลก คาดว่าจะสูงถึง 1 ล้านล้านดอลลาร์ภายในทศวรรษหน้า</p>
+                                <div class="mt-4 px-3 py-1 rounded bg-indigo-950/80 border border-indigo-500/30 text-indigo-300 text-[10px] font-mono tracking-widest uppercase">Global Projections</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fast Facts Stats Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass p-8 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition-all duration-300">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
+                        <div class="p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl w-fit mb-4 text-blue-400">
+                            <i data-lucide="trending-up" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-space font-extrabold text-3xl text-white mb-2">+170%</h3>
+                        <p class="text-slate-400 text-sm">การเติบโตของตำแหน่งงานที่เกี่ยวข้องกับเทคโนโลยีอวกาศในช่วง 5 ปีที่ผ่านมา</p>
+                    </div>
+                    <div class="glass p-8 rounded-2xl relative overflow-hidden group hover:border-purple-500/30 transition-all duration-300">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/10 transition-colors"></div>
+                        <div class="p-3 bg-purple-500/10 border border-purple-500/20 rounded-xl w-fit mb-4 text-purple-400">
+                            <i data-lucide="users" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-space font-extrabold text-3xl text-white mb-2">90,000+</h3>
+                        <p class="text-slate-400 text-sm">นักพัฒดาวเทียม, วิศวกร และผู้เชี่ยวชาญที่ต้องการเพิ่มทั่วโลกในปีนี้</p>
+                    </div>
+                    <div class="glass p-8 rounded-2xl relative overflow-hidden group hover:border-emerald-500/30 transition-all duration-300">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/10 transition-colors"></div>
+                        <div class="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl w-fit mb-4 text-emerald-400">
+                            <i data-lucide="sparkles" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-space font-extrabold text-3xl text-white mb-2">15+</h3>
+                        <p class="text-slate-400 text-sm">สายงานใหม่แกะกล่องที่กำลังเกิดขึ้น ตั้งแต่กฎหมายอวกาศไปจนถึงการแพทย์แรงโน้มถ่วงต่ำ</p>
+                    </div>
+                </div>
+
+                <!-- Showcase Highlight Careers -->
+                <div class="space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+                        <div>
+                            <span class="text-blue-400 font-semibold text-xs tracking-widest uppercase font-space">Featured Roles</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">ตัวอย่างอาชีพเด่นแห่งทศวรรษหน้า</h2>
+                        </div>
+                        <button onclick="switchTab('careers')" class="text-blue-400 hover:text-blue-300 text-sm font-semibold flex items-center gap-1.5 transition-colors">
+                            ดูทั้งหมดในคลังอาชีพ <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="featured-careers-list">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <!-- Citizen Science Section Inside Home -->
+                <div class="glass rounded-3xl p-8 lg:p-12 relative overflow-hidden border border-blue-500/10">
+                    <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-8 space-y-4">
+                            <div class="px-3 py-1 rounded bg-indigo-500/10 text-indigo-400 text-xs font-semibold w-fit font-space">CITIZEN SCIENCE PORTAL</div>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">ฝึกทักษะด้วยการช่วยเหลือภารกิจระดับโลก</h2>
+                            <p class="text-slate-400 leading-relaxed text-sm sm:text-base">
+                                คุณไม่จำเป็นต้องจบด็อกเตอร์เพื่อช่วยเหลือนาซ่า! โครงการ Citizen Science เปิดโอกาสให้บุคคลทั่วไปร่วมค้นดาวเคราะห์นอกระบบ วิเคราะห์ดาวหาง หรือคัดแยกชั้นกาแล็กซีผ่านภาพถ่ายดาวเทียมจริง แหล่งเรียนรู้ชั้นดีสำหรับคนรักอวกาศ
+                            </p>
+                            <div class="flex flex-wrap gap-4 pt-2">
+                                <a href="https://www.zooniverse.org/projects" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-slate-800 border border-slate-700/80 hover:bg-slate-700/80 text-white font-medium text-sm transition-all flex items-center gap-2">
+                                    <i data-lucide="external-link" class="w-4 h-4 text-blue-400"></i> เริ่มเรียนรู้ที่ Zooniverse
+                                </a>
+                                <a href="https://science.nasa.gov/citizen-science" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-slate-800 border border-slate-700/80 hover:bg-slate-700/80 text-white font-medium text-sm transition-all flex items-center gap-2">
+                                    <i data-lucide="external-link" class="w-4 h-4 text-yellow-500"></i> โครงการ NASA Citizen
+                                </a>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-4 bg-slate-900/80 p-6 rounded-2xl border border-slate-800 space-y-4">
+                            <h4 class="font-space font-semibold text-sm text-indigo-300 tracking-wider">ภารกิจที่เปิดรับในปัจจุบัน</h4>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+                                    <span class="font-medium text-slate-200">Planet Hunters TESS</span>
+                                    <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-semibold font-mono text-[10px]">Active</span>
+                                </div>
+                                <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+                                    <span class="font-medium text-slate-200">Galaxy Zoo: 3D Mapping</span>
+                                    <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-semibold font-mono text-[10px]">Active</span>
+                                </div>
+                                <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+                                    <span class="font-medium text-slate-200">Milky Way Project</span>
+                                    <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-semibold font-mono text-[10px]">Active</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: CAREER DATABASE -->
+            <section id="section-careers" class="hidden space-y-8 animate-fade-in">
+                <div class="text-center max-w-2xl mx-auto space-y-4">
+                    <span class="text-blue-400 font-semibold text-xs tracking-widest uppercase font-space">ASTRONOMY & SPACE CAREERS</span>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-white">คลังทักษะและอาชีพอวกาศแห่งอนาคต</h1>
+                    <p class="text-slate-400 text-sm sm:text-base">เจาะลึกอาชีพใหม่ที่มีศักยภาพสูงสุดในยุคเศรษฐกิจอวกาศใหม่ เรียนรู้สิ่งที่ต้องเรียนรู้และทักษะที่ต้องฝึกฝนตั้งแต่ตอนนี้</p>
+                </div>
+
+                <!-- Filter & Search Controls -->
+                <div class="glass p-4 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4 border border-blue-500/10">
+                    <div class="relative w-full md:w-80">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <i data-lucide="search" class="w-5 h-5 text-slate-500"></i>
+                        </span>
+                        <input type="text" id="career-search-input" onkeyup="filterCareers()" class="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="ค้นหาตามชื่ออาชีพหรือคีย์เวิร์ด...">
+                    </div>
+                    <div class="flex flex-wrap gap-2 w-full md:w-auto justify-end">
+                        <button onclick="setCareerCategory('All')" id="cat-All" class="px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white border border-blue-500/30 transition-all">ทั้งหมด</button>
+                        <button onclick="setCareerCategory('Engineering')" id="cat-Engineering" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700 transition-all">วิศวกรรม & เทคนิค</button>
+                        <button onclick="setCareerCategory('Sciences')" id="cat-Sciences" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700 transition-all">วิทยาศาสตร์ & วิจัย</button>
+                        <button onclick="setCareerCategory('Humanities')" id="cat-Humanities" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700 transition-all">สังคมศาสตร์ & ดีไซน์</button>
+                    </div>
+                </div>
+
+                <!-- Careers Dynamic List Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="careers-full-grid">
+                    <!-- Filled dynamically via JS -->
+                </div>
+            </section>
+
+            <!-- SECTION 3: SKILLS FINDER QUIZ & PRACTICAL SIMULATOR -->
+            <section id="section-quiz" class="hidden max-w-3xl mx-auto space-y-8 animate-fade-in">
+                <div class="text-center space-y-4">
+                    <span class="text-purple-400 font-semibold text-xs tracking-widest uppercase font-space">SPACE CAREER MATCHMAKER</span>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-white">ประเมินเส้นทางอาชีพอวกาศของคุณ</h1>
+                    <p class="text-slate-400 text-sm sm:text-base">ตอบคำถาม 5 ข้อเพื่อค้นหาว่าทัศนคติ ความชอบ และความรู้พื้นฐานของคุณ สอดคล้องกับอาชีพไหนใน New Space Economy มากที่สุด!</p>
+                </div>
+
+                <!-- Quiz Main Container -->
+                <div class="glass rounded-3xl p-6 sm:p-10 border border-blue-500/10 relative overflow-hidden">
+                    <div id="quiz-intro-state" class="text-center space-y-8 py-4">
+                        <div class="w-20 h-20 rounded-full bg-purple-500/10 border-2 border-dashed border-purple-500/30 flex items-center justify-center mx-auto text-purple-400 mb-4 animate-bounce">
+                            <i data-lucide="compass" class="w-10 h-10"></i>
+                        </div>
+                        <div class="space-y-2">
+                            <h2 class="text-xl sm:text-2xl font-bold text-white">คุณพร้อมทลายขอบเขตแล้วหรือยัง?</h2>
+                            <p class="text-slate-400 text-sm max-w-md mx-auto leading-relaxed">การทดสอบนี้วิเคราะห์ทิศทางความสามารถดั้งเดิมของคุณ จากนั้นจะประมวลผลคำแนะนำที่ช่วยพัฒนาทักษะเฉพาะด้านของคุณให้พร้อมสู้ระดับสากล</p>
+                        </div>
+                        <button onclick="startQuiz()" class="px-8 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:opacity-90 text-white font-semibold transition-all shadow-lg shadow-indigo-500/20">
+                            เริ่มทำแบบทดสอบ (ใช้เวลา 2 นาที)
+                        </button>
+                    </div>
+
+                    <!-- Interactive Questions State -->
+                    <div id="quiz-question-state" class="hidden space-y-8">
+                        <!-- Progress bar -->
+                        <div>
+                            <div class="flex justify-between items-center text-xs text-slate-400 mb-2 font-mono">
+                                <span>คำถามข้อที่ <span id="quiz-current-num">1</span> จาก 5</span>
+                                <span id="quiz-progress-text">20% Completed</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-1.5 border border-slate-800">
+                                <div id="quiz-progress-bar" class="bg-gradient-to-r from-blue-500 to-purple-500 h-1.5 rounded-full transition-all duration-300" style="width: 20%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Question Prompt -->
+                        <div>
+                            <h2 class="text-lg sm:text-xl font-bold text-slate-100 leading-relaxed" id="quiz-question-title">
+                                กำลังโหลดคำถาม...
+                            </h2>
+                        </div>
+
+                        <!-- Options Container -->
+                        <div class="grid grid-cols-1 gap-4" id="quiz-options-container">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Result Loading State -->
+                    <div id="quiz-loading-state" class="hidden text-center py-16 space-y-6">
+                        <div class="w-16 h-16 rounded-full border-4 border-indigo-500/20 border-t-indigo-500 animate-spin mx-auto"></div>
+                        <p class="text-slate-300 font-medium">กำลังประมวลผลอัลกอริทึมจับคู่ทักษะกับความต้องการในอุตสาหกรรมอวกาศ...</p>
+                    </div>
+
+                    <!-- Quiz Result State & Practice Simulator -->
+                    <div id="quiz-result-state" class="hidden space-y-8">
+                        <div class="text-center space-y-3">
+                            <span class="px-3 py-1 rounded bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold tracking-wider font-space uppercase">MATCH FOUND</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">อาชีพอวกาศที่เหมาะสมที่สุดสำหรับคุณคือ:</h2>
+                        </div>
+
+                        <!-- Recommended Career Highlight Card -->
+                        <div class="p-6 sm:p-8 rounded-2xl bg-gradient-to-tr from-slate-900 to-indigo-950/40 border border-indigo-500/30 space-y-6 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl"></div>
+                            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 border-b border-slate-800/80 pb-4">
+                                <div id="quiz-match-icon-bg" class="p-4 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl text-indigo-400">
+                                    <i data-lucide="award" id="quiz-match-icon" class="w-8 h-8"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl sm:text-2xl font-extrabold text-white" id="quiz-match-name">นักสถาปัตยกรรมอวกาศ</h3>
+                                    <span class="text-xs text-indigo-300 font-mono tracking-wider uppercase" id="quiz-match-cat">Space Architecture</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-1">ทำไมคุณจึงเหมาะกับอาชีพนี้:</h4>
+                                    <p class="text-slate-300 text-sm leading-relaxed" id="quiz-match-reason">
+                                        คำอธิบายที่ได้จากการสแกนคำตอบ...
+                                    </p>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                                    <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800">
+                                        <span class="text-[10px] text-slate-500 uppercase tracking-wider block">ทักษะสำคัญที่ควรเน้น</span>
+                                        <span class="text-xs font-semibold text-white block mt-1" id="quiz-match-skills">3D Modeling, Physics, UX</span>
+                                    </div>
+                                    <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800">
+                                        <span class="text-[10px] text-slate-500 uppercase tracking-wider block">รายได้คาดการณ์ในอนาคต</span>
+                                        <span class="text-xs font-semibold text-emerald-400 block mt-1" id="quiz-match-salary">฿150,000 - ฿300,000 / เดือน</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MINI ROLEPLAY SIMULATOR AFTER TEST -->
+                        <div class="p-6 rounded-2xl border border-purple-500/30 bg-space-900/90 space-y-4 relative">
+                            <div class="absolute inset-0 pointer-events-none scanline opacity-10"></div>
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="gamepad-2" class="w-5 h-5 text-purple-400 animate-pulse"></i>
+                                <h3 class="font-space font-bold text-sm tracking-wider text-purple-300 uppercase">ระบบจำลองปฏิบัติภารกิจจริงของวิชาชีพ (Live Mission Practice)</h3>
+                            </div>
+                            <p class="text-xs text-slate-400 leading-relaxed">สัมผัสภารกิจปฏิบัติจริงเพื่อทดสอบทักษะในการแก้ปัญหาของอาชีพที่คุณได้รับเพื่อก้าวสู่เส้นทางมืออาชีพ</p>
+                            
+                            <div id="practical-sim-box" class="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-4">
+                                <!-- Dynamically replaced in JS depending on matched career -->
+                                <p class="text-xs text-slate-400">กรุณาทำแบบทดสอบให้เสร็จสิ้นเพื่อเริ่มต้นแบบจำลองภารกิจ</p>
+                            </div>
+                        </div>
+
+                        <!-- Action Controls -->
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <button onclick="startQuiz()" class="px-6 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 text-sm font-semibold transition-all">
+                                ทำแบบทดสอบอีกครั้ง
+                            </button>
+                            <button onclick="goToAdvisorWithCareer()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-sm font-semibold transition-all flex items-center justify-center gap-2">
+                                คุยกับ AI เจาะลึกอาชีพนี้ <i data-lucide="sparkles" class="w-4 h-4 text-purple-300 animate-pulse"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: MULTIVERSE CAREER SIMULATOR -->
+            <section id="section-simulator" class="hidden space-y-8 animate-fade-in">
+                <div class="text-center max-w-3xl mx-auto space-y-4">
+                    <span class="text-blue-400 font-semibold text-xs tracking-widest uppercase font-space">COSMIC WORKPLACE SIMULATOR</span>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-white">ระบบจำลองปฏิบัติภารกิจจริงของแต่ละอาชีพ</h1>
+                    <p class="text-slate-400 text-sm sm:text-base">ลองสวมบทบาทสวมชุดปฏิบัติการล้ำยุคเพื่อควบคุมอุปกรณ์ และตัดสินใจแก้ไขสถานการณ์วิกฤตของทั้ง 6 วิชาชีพหลักสากล</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                    <!-- Left: Select Career Mission Card List -->
+                    <div class="lg:col-span-4 flex flex-col space-y-3 max-h-[600px] overflow-y-auto pr-1">
+                        <h3 class="font-space font-bold text-xs tracking-wider text-slate-400 uppercase mb-2">เลือกอาชีพที่อยากทดลองฝึกปฏิบัติ</h3>
+                        
+                        <button onclick="loadCareerSim('space-lawyer')" id="sim-btn-space-lawyer" class="w-full text-left p-4 rounded-xl border border-blue-500/20 bg-slate-900/60 hover:bg-slate-850/80 transition-all flex items-center gap-3 group border-l-4 border-l-purple-500">
+                            <div class="p-2.5 bg-purple-500/10 rounded-lg text-purple-400 group-hover:bg-purple-500 group-hover:text-white transition-all">
+                                <i data-lucide="gavel" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-sm font-bold text-white block">นักกฎหมายอวกาศ</span>
+                                <span class="text-[10px] text-slate-500 block">วิเคราะห์กรณีพิพาทดินแดนเหมืองแร่ดวงจันทร์</span>
+                            </div>
+                        </button>
+
+                        <button onclick="loadCareerSim('asteroid-miner')" id="sim-btn-asteroid-miner" class="w-full text-left p-4 rounded-xl border border-blue-500/10 bg-slate-900/40 hover:bg-slate-850/80 transition-all flex items-center gap-3 group">
+                            <div class="p-2.5 bg-blue-500/10 rounded-lg text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                <i data-lucide="drill" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-sm font-bold text-white block">วิศวกรเหมืองดาวเคราะห์น้อย</span>
+                                <span class="text-[10px] text-slate-500 block">ควบคุมแขนกลเลเซอร์เจาะแร่ดาวเคราะห์น้อย</span>
+                            </div>
+                        </button>
+
+                        <button onclick="loadCareerSim('space-architect')" id="sim-btn-space-architect" class="w-full text-left p-4 rounded-xl border border-blue-500/10 bg-slate-900/40 hover:bg-slate-850/80 transition-all flex items-center gap-3 group">
+                            <div class="p-2.5 bg-rose-500/10 rounded-lg text-rose-400 group-hover:bg-rose-600 group-hover:text-white transition-all">
+                                <i data-lucide="home" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-sm font-bold text-white block">สถาปนิกอวกาศ</span>
+                                <span class="text-[10px] text-slate-500 block">ซ่อมแซมโครงสร้างโดมที่อยู่อาศัยบนดาวอังคาร</span>
+                            </div>
+                        </button>
+
+                        <button onclick="loadCareerSim('astrobiologist')" id="sim-btn-astrobiologist" class="w-full text-left p-4 rounded-xl border border-blue-500/10 bg-slate-900/40 hover:bg-slate-850/80 transition-all flex items-center gap-3 group">
+                            <div class="p-2.5 bg-emerald-500/10 rounded-lg text-emerald-400 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                                <i data-lucide="microscope" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-sm font-bold text-white block">นักชีววิทยาอวกาศ</span>
+                                <span class="text-[10px] text-slate-500 block">เพาะเลี้ยงและตัดแต่งจุลินทรีย์สายพันธุ์อวกาศ</span>
+                            </div>
+                        </button>
+
+                        <button onclick="loadCareerSim('space-medicine')" id="sim-btn-space-medicine" class="w-full text-left p-4 rounded-xl border border-blue-500/10 bg-slate-900/40 hover:bg-slate-850/80 transition-all flex items-center gap-3 group">
+                            <div class="p-2.5 bg-pink-500/10 rounded-lg text-pink-400 group-hover:bg-pink-600 group-hover:text-white transition-all">
+                                <i data-lucide="heart-pulse" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-sm font-bold text-white block">แพทย์อวกาศ</span>
+                                <span class="text-[10px] text-slate-500 block">วิเคราะห์และกู้คืนระดับมวลกระดูกของนักบิน</span>
+                            </div>
+                        </button>
+
+                        <button onclick="loadCareerSim('cubesat-engineer')" id="sim-btn-cubesat-engineer" class="w-full text-left p-4 rounded-xl border border-blue-500/10 bg-slate-900/40 hover:bg-slate-850/80 transition-all flex items-center gap-3 group">
+                            <div class="p-2.5 bg-cyan-500/10 rounded-lg text-cyan-400 group-hover:bg-cyan-600 group-hover:text-white transition-all">
+                                <i data-lucide="cpu" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-sm font-bold text-white block">วิศวกรดาวเทียมขนาดเล็ก</span>
+                                <span class="text-[10px] text-slate-500 block">กางแผงโซลาร์เซลล์และเชื่อมโครงข่ายสัญญาณ CubeSat</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Right: Immersive Interactive HUD Screen -->
+                    <div class="lg:col-span-8 glass rounded-3xl border border-blue-500/20 p-6 flex flex-col justify-between space-y-6 relative overflow-hidden">
+                        <div class="absolute inset-0 pointer-events-none scanline opacity-20"></div>
+                        
+                        <!-- HUD Header -->
+                        <div class="flex justify-between items-center pb-3 border-b border-blue-500/10 z-10">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-blue-500 animate-ping"></span>
+                                <span id="sim-main-spec" class="font-space font-bold text-xs tracking-widest text-blue-400 uppercase">SYS_SIMULATOR_V4.0 // ACTIVE</span>
+                            </div>
+                            <span id="sim-main-status" class="font-mono text-[10px] text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded bg-emerald-950/20">READY</span>
+                        </div>
+
+                        <!-- Active Simulator Layout -->
+                        <div id="sim-main-canvas-holder" class="flex-grow min-h-[350px] bg-slate-950/80 border border-slate-900 rounded-2xl p-6 flex flex-col justify-center items-center text-center space-y-4 relative overflow-hidden">
+                            <!-- Filled dynamically via loadCareerSim -->
+                        </div>
+
+                        <!-- Feedback results log -->
+                        <div id="sim-main-feedback" class="hidden p-4 rounded-xl bg-slate-900 border border-blue-500/10 text-xs text-slate-300 leading-normal">
+                            <!-- Filled by sim decisions -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5: AI CONSULTANT -->
+            <section id="section-advisor" class="hidden max-w-4xl mx-auto space-y-6 animate-fade-in">
+                <div class="text-center max-w-2xl mx-auto space-y-3">
+                    <span class="text-purple-400 font-semibold text-xs tracking-widest uppercase font-space">AstroPath AI COCOUNSELOR</span>
+                    <h1 class="text-3xl font-extrabold text-white">ปรึกษาและวางแผนอาชีพอวกาศกับ AI</h1>
+                    <p class="text-slate-400 text-sm sm:text-base">พิมพ์สอบถามเกี่ยวกับวิชาเรียนที่ต้องเน้น, ทักษะที่ขาดหาย หรือปรึกษาเกี่ยวกับสถาบันการศึกษาเพื่อก้าวสู่เส้นทางวงการอวกาศระดับประเทศและระดับโลก</p>
+                </div>
+
+                <!-- Chat Box Main Frame -->
+                <div class="glass rounded-3xl border border-blue-500/10 h-[600px] flex flex-col overflow-hidden relative">
+                    <!-- Chat Header -->
+                    <div class="p-4 bg-slate-900/90 border-b border-slate-800 flex justify-between items-center">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 shadow-inner">
+                                <i data-lucide="bot-message-square" class="w-5 h-5 animate-pulse"></i>
+                            </div>
+                            <div>
+                                <span class="font-bold text-sm text-white block">AstroPath AI Consultant</span>
+                                <span class="text-[10px] text-emerald-400 flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Gemini 2.5 Active
+                                </span>
+                            </div>
+                        </div>
+                        <button onclick="clearChatHistory()" class="p-2 text-slate-500 hover:text-slate-300 rounded-lg hover:bg-slate-800 transition-all" title="ล้างประวัติการคุย">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <!-- Chat Messages List -->
+                    <div id="chat-messages-container" class="flex-grow overflow-y-auto p-6 space-y-6">
+                        <!-- Welcome message from bot -->
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
+                                <i data-lucide="bot" class="w-4 h-4"></i>
+                            </div>
+                            <div class="space-y-1.5 max-w-[85%]">
+                                <div class="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none p-4 text-sm text-slate-200 leading-relaxed shadow-sm">
+                                    ยินดีต้อนรับสู่ศูนย์แนะแนวอาชีพอวกาศยุค New Space Economy ครับ! 🌌 ผมเป็น AI ที่จะช่วยออกแบบส้นทางและตอบคำถามของคุณ<br><br>
+                                    คุณสามารถถามผมได้ตั้งแต่: <br>
+                                    🚀 <em>"อยากเป็นนักทำเหมืองดาวเคราะห์น้อยต้องเรียนคณะอะไร?"</em><br>
+                                    🌌 <em>"แพทย์อวกาศเขาทำงานวิจัยแบบไหนบนสถานีอวกาศ?"</em><br>
+                                    📝 <em>"ช่วยวางแผนพัฒนาทักษะ (Roadmap) สำหรับเด็ก ม.ปลาย ที่อยากทำเกี่ยวกับดาวเทียม CubeSat หน่อย"</em>
+                                </div>
+                                <span class="text-[10px] text-slate-600 font-mono block pl-2">System Assistant</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Input Tray -->
+                    <form id="chat-input-form" onsubmit="handleSendChat(event)" class="p-4 bg-slate-900/90 border-t border-slate-800 flex gap-3">
+                        <input type="text" id="chat-text-input" autocomplete="off" class="flex-grow px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-slate-500 transition-all" placeholder="ป้อนคำถามเกี่ยวกับเส้นทางสายอวกาศของคุณที่นี่...">
+                        <button type="submit" class="px-5 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-95 text-white text-sm font-semibold flex items-center justify-center gap-2 transition-all shrink-0">
+                            ส่งคำถาม <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <!-- HIGH-TECH HIGH-DEFINITION MULTIVERSE DOSSIER MODAL (POP-UP) -->
+        <div id="career-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6 md:p-10 bg-space-950/90 backdrop-blur-md" onclick="closeCareerModalOutside(event)">
+            <div id="career-modal-content" class="w-full max-w-5xl glass rounded-3xl overflow-hidden shadow-2xl shadow-blue-500/25 border border-blue-500/30 flex flex-col md:flex-row relative animate-hologram max-h-[92vh] md:max-h-[85vh]">
+                <!-- Interactive High-Tech Grid Overlays -->
+                <div class="absolute inset-0 pointer-events-none scanline opacity-40"></div>
+                
+                <!-- Left Section: Immersive Cinematic Astronaut Illustration (Felix Baumgartner Stratos Style) -->
+                <div class="w-full md:w-[45%] bg-slate-950 border-r border-blue-500/20 relative flex items-center justify-center overflow-hidden min-h-[250px] md:min-h-0">
+                    <div id="modal-image-container" class="w-full h-full absolute inset-0 transition-transform duration-700 hover:scale-105">
+                        <!-- Filled by JS with Cinematic SVGs -->
+                    </div>
+                    <!-- Tech HUD Details Overlay -->
+                    <div class="absolute top-4 left-4 font-mono text-[9px] text-blue-400 uppercase tracking-widest z-10 pointer-events-none bg-slate-950/80 px-2.5 py-1 rounded border border-blue-500/30">
+                        SYS.LOC: MULTIVERSE L4 // STABLE
+                    </div>
+                    <div class="absolute bottom-4 left-4 font-mono text-[9px] text-emerald-400 tracking-wider z-10 pointer-events-none bg-slate-950/80 px-2.5 py-1 rounded border border-emerald-500/30">
+                        ALTITUDE: 130,000 FT // SPEED: ESCAPE VELOCITY
+                    </div>
+                    <!-- Target crosshair simulation -->
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-25 z-10">
+                        <div class="w-28 h-28 border border-dashed border-blue-500 rounded-full animate-spin-slow"></div>
+                        <div class="absolute w-8 h-0.5 bg-blue-400"></div>
+                        <div class="absolute h-8 w-0.5 bg-blue-400"></div>
+                    </div>
+                </div>
+
+                <!-- Right Section: Career Mission Specs & Roadmap details -->
+                <div class="w-full md:w-[55%] p-6 sm:p-8 flex flex-col justify-between overflow-y-auto z-10 relative bg-space-900/60">
+                    <!-- Close button -->
+                    <button onclick="closeCareerModal()" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-white hover:bg-slate-800/80 rounded-full border border-slate-800 transition-all">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+
+                    <div class="space-y-6">
+                        <div>
+                            <span id="modal-career-cat" class="px-3 py-1 rounded bg-blue-500/10 text-blue-400 text-xs font-semibold tracking-wider font-space uppercase border border-blue-500/20 inline-block mb-3">
+                                ENGINEERING
+                            </span>
+                            <h2 id="modal-career-title" class="text-2xl sm:text-3xl font-extrabold text-white leading-tight glow-blue">
+                                นักทำเหมืองดาวเคราะห์น้อย
+                            </h2>
+                            <p id="modal-career-desc" class="text-slate-300 text-sm leading-relaxed mt-2">
+                                คำอธิบายย่อย...
+                            </p>
+                        </div>
+
+                        <!-- Data Grid Grid specs -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-3 bg-slate-950/80 rounded-xl border border-blue-500/15">
+                                <span class="text-[10px] text-slate-500 uppercase tracking-wider block font-semibold">รายได้คาดการณ์อนาคต</span>
+                                <span id="modal-career-salary" class="text-sm font-semibold text-emerald-400 block mt-1">฿150,000 - ฿300,000</span>
+                            </div>
+                            <div class="p-3 bg-slate-950/80 rounded-xl border border-blue-500/15">
+                                <span class="text-[10px] text-slate-500 uppercase tracking-wider block font-semibold">ทักษะสากลที่จำเป็น</span>
+                                <span id="modal-career-skills" class="text-sm font-semibold text-slate-200 block mt-1">Robotics, Physics, ML</span>
+                            </div>
+                        </div>
+
+                        <!-- Education and Roadmap spec detail -->
+                        <div class="space-y-3">
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+                                <i data-lucide="graduation-cap" class="w-4 h-4 text-purple-400 animate-pulse"></i> แผนที่การศึกษา (EDUCATION ROADMAP)
+                            </h4>
+                            <div id="modal-career-roadmap" class="p-4 bg-slate-950/70 rounded-xl border border-purple-500/20 text-xs sm:text-sm text-slate-300 leading-relaxed font-sans shadow-inner">
+                                แนะนำวิชาเรียน...
+                            </div>
+                        </div>
+
+                        <!-- High Tech Quote/Future Prospect -->
+                        <div class="p-3.5 bg-blue-500/5 rounded-xl border border-blue-500/20 text-xs text-blue-300 italic flex items-start gap-2.5">
+                            <i data-lucide="info" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5 animate-pulse"></i>
+                            <span>การเดินทางและการบุกเบิกนอกโลกจำเป็นต้องอาศัยวิชาฟิสิกส์ การคำนวณเวกเตอร์ และจิตวิญญาณของนวัตกรรมในการศึกษา</span>
+                        </div>
+                    </div>
+
+                    <!-- CTA Action controls -->
+                    <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t border-slate-800/60 mt-6">
+                        <button onclick="closeCareerModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400 hover:text-white text-xs font-semibold transition-all">
+                            ย้อนกลับ
+                        </button>
+                        <button id="modal-ai-btn" class="w-full sm:flex-grow px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:opacity-95 text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-purple-500/20">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-yellow-300 animate-pulse"></i> ปรึกษา AstroPath AI เจาะลึกอาชีพนี้
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="glass border-t border-blue-500/10 mt-16 py-8 relative z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+                <div class="flex items-center space-x-3 justify-center md:justify-start">
+                    <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white">
+                        <i data-lucide="orbit" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <span class="font-space font-semibold text-sm tracking-wider text-slate-300">ASTROPATH PORTAL</span>
+                        <p class="text-[10px] text-slate-500">แพลตฟอร์มการศึกษาและวางแผนสายอาชีพด้านอวกาศแห่งอนาคต</p>
+                    </div>
+                </div>
+                <div class="text-xs text-slate-500 space-y-1">
+                    <p>&copy; 2026 AstroPath. พัฒนาเพื่อการศึกษา ดาราศาสตร์ ฟิสิกส์ และเทคโนโลยีอวกาศยุคใหม่</p>
+                    <p>ขับเคลื่อนด้วยเทคโนโลยีปัญญาประดิษฐ์เสมือนจริงของ Gemini เพื่อทักษะและการพัฒนาอย่างยั่งยืน</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- MAIN JAVASCRIPT LOGIC -->
+    <script>
+        // --- DATA DEFS ---
+        const CAREER_DB = [
+            {
+                id: "space-lawyer",
+                title: "นักกฎหมายอวกาศ (Space Lawyer)",
+                category: "Humanities",
+                shortDesc: "ผู้ออกแบบและควบคุมกฎหมายระเบียบการปกป้องสิทธิ์ในการทำเหมืองดาวเคราะห์น้อยและการแบ่งปันทรัพยากรนอกโลก",
+                salary: "฿120,000 - ฿350,000+",
+                skills: "International Law, Space Treaties, Negotiation",
+                roadmap: "เรียนจบคณะนิติศาสตร์ จากนั้นเลือกเรียนต่อปริญญาโทเฉพาะทางด้าน กฎหมายทางอากาศและอวกาศ (Air and Space Law)",
+                icon: "gavel",
+                isFeatured: true,
+                imageSvg: `
+                <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full rounded-xl overflow-hidden shadow-inner">
+                    <defs>
+                        <linearGradient id="gavel-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1e1b4b"/>
+                            <stop offset="50%" stop-color="#311042"/>
+                            <stop offset="100%" stop-color="#02040a"/>
+                        </linearGradient>
+                        <linearGradient id="neon-glow" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#c084fc"/>
+                            <stop offset="100%" stop-color="#6366f1"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#gavel-grad-1)"/>
+                    <circle cx="200" cy="100" r="80" stroke="url(#neon-glow)" stroke-width="1" stroke-dasharray="4 8" opacity="0.4" />
+                    <circle cx="200" cy="100" r="50" stroke="#6366f1" stroke-width="1" opacity="0.2"/>
+                    <ellipse cx="200" cy="100" rx="140" ry="40" stroke="url(#neon-glow)" stroke-width="1.5" opacity="0.7" transform="rotate(-15 200 100)"/>
+                    <circle cx="80" cy="50" r="1.5" fill="#fff" opacity="0.8"/>
+                    <circle cx="320" cy="150" r="1.2" fill="#fff" opacity="0.5"/>
+                    <circle cx="120" cy="160" r="2" fill="#c084fc" opacity="0.6"/>
+                    <circle cx="280" cy="40" r="1.5" fill="#818cf8" opacity="0.7"/>
+                    <g transform="translate(200, 100) scale(0.95)">
+                        <line x1="0" y1="-45" x2="0" y2="45" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="0" y1="-45" x2="0" y2="45" stroke="#c084fc" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M -25 45 L 25 45" stroke="#818cf8" stroke-width="5" stroke-linecap="round"/>
+                        <line x1="-50" y1="-30" x2="50" y2="-30" stroke="url(#neon-glow)" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="0" cy="-30" r="6" fill="#fff" filter="drop-shadow(0 0 8px #c084fc)"/>
+                        <line x1="-50" y1="-30" x2="-65" y2="10" stroke="#818cf8" stroke-width="1"/>
+                        <line x1="-50" y1="-30" x2="-35" y2="10" stroke="#818cf8" stroke-width="1"/>
+                        <path d="M -75 10 C -75 25 -25 25 -25 10 Z" fill="rgba(192, 132, 252, 0.25)" stroke="#c084fc" stroke-width="1.5"/>
+                        <circle cx="-50" cy="10" r="3" fill="#fff"/>
+                        <line x1="50" y1="-30" x2="35" y2="10" stroke="#818cf8" stroke-width="1"/>
+                        <line x1="50" y1="-30" x2="65" y2="10" stroke="#818cf8" stroke-width="1"/>
+                        <path d="M 25 10 C 25 25 75 25 75 10 Z" fill="rgba(192, 132, 252, 0.25)" stroke="#c084fc" stroke-width="1.5"/>
+                        <circle cx="50" cy="10" r="3" fill="#fff"/>
+                        <ellipse cx="50" cy="10" rx="15" ry="5" stroke="#fff" stroke-width="0.75" opacity="0.8" transform="rotate(20 50 10)"/>
+                    </g>
+                </svg>
+                `,
+                // Cinematic realistic space scene
+                popupImageSvg: `
+                <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="space-grad" cx="50%" cy="50%" r="75%">
+                            <stop offset="0%" stop-color="#0e172c"/>
+                            <stop offset="70%" stop-color="#020308"/>
+                            <stop offset="100%" stop-color="#000000"/>
+                        </radialGradient>
+                        <linearGradient id="atmos-limb" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop offset="0%" stop-color="#60a5fa" stop-opacity="1"/>
+                            <stop offset="25%" stop-color="#3b82f6" stop-opacity="0.8"/>
+                            <stop offset="65%" stop-color="#818cf8" stop-opacity="0.35"/>
+                            <stop offset="100%" stop-color="#c084fc" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#space-grad)"/>
+                    <!-- Atmospheric Curved Earth base (Realistic curved atmosphere) -->
+                    <path d="M -50 420 C 100 365 400 365 550 420 L 550 550 L -50 550 Z" fill="#0c1122"/>
+                    <path d="M -50 420 C 100 365 400 365 550 420" stroke="url(#atmos-limb)" stroke-width="18" fill="none" filter="blur(5px)"/>
+                    <path d="M -50 415 C 100 360 400 360 550 415" stroke="#ffffff" stroke-width="2" fill="none" opacity="0.95"/>
+                    <!-- Earth texture and lights -->
+                    <path d="M 120 440 Q 180 430 250 445" stroke="rgba(59, 130, 246, 0.45)" stroke-width="14" stroke-linecap="round" filter="blur(8px)"/>
+                    <circle cx="180" cy="450" r="4.5" fill="#fef08a" opacity="0.8" filter="blur(1px)"/>
+                    <circle cx="280" cy="460" r="3" fill="#fef08a" opacity="0.9" filter="blur(1px)"/>
+                    <!-- Floating Astronaut in Stratos Freefall pose (Cinematic scale) -->
+                    <g transform="translate(250, 185) rotate(-8) scale(1.2)">
+                        <ellipse cx="0" cy="45" rx="22" ry="8" fill="rgba(0,0,0,0.55)" filter="blur(8px)"/>
+                        <path d="M -150 -100 Q -80 0 -20 20" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.8" filter="drop-shadow(0 0 3px #c084fc)"/>
+                        <!-- White high-definition EVA spacesuit body -->
+                        <path d="M -25 25 C -25 15 -14 -2 0 -2 C 14 -2 25 15 25 25 L 20 65 L -20 65 Z" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+                        <!-- Highly detailed golden reflective visor -->
+                        <circle cx="0" cy="4" r="16" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+                        <path d="M -12 -1 C -9 -11 9 -11 12 -1 C 13 6 -13 6 -12 -1 Z" fill="#fbbf24" stroke="#d97706" stroke-width="1.5" filter="drop-shadow(0 0 6px #d97706)"/>
+                        <!-- Reflection line on visor -->
+                        <path d="M -7 -4 C -3 -7 3 -7 7 -4" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.9"/>
+                        <!-- HUD Data tablet -->
+                        <polygon points="-45,-20 -15,-38 15,-38 45,-20 0,10" fill="rgba(192, 132, 252, 0.15)" stroke="#c084fc" stroke-width="1.5" filter="drop-shadow(0 0 5px #6366f1)"/>
+                    </g>
+                </svg>
+                `
+            },
+            {
+                id: "asteroid-miner",
+                title: "วิศวกรเหมืองดาวเคราะห์น้อย (Asteroid Mining Engineer)",
+                category: "Engineering",
+                shortDesc: "ออกแบบและคุมระบบขุดเจาะแร่อันมีค่า (แพลทินัม, เหล็กนิกเกิล, น้ำแข็ง) บนดาวเคราะห์น้อยใกล้โลก เพื่อขนถ่ายกลับมาหรือแปรรูปเป็นเชื้อเพลิง",
+                salary: "฿180,000 - ฿450,000+",
+                skills: "Robotics, Geology, Propulsion Systems",
+                roadmap: "ศึกษาปริญญาตรีด้านวิศวกรรมเหมืองแร่, หุ่นยนต์ หรือวิศวกรรมการบินและอวกาศ แนะนำต่อยอดด้านธรณีวิทยาอวกาศ",
+                icon: "pickaxe",
+                isFeatured: true,
+                imageSvg: `
+                <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full rounded-xl overflow-hidden shadow-inner">
+                    <defs>
+                        <linearGradient id="mine-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#0b1329"/>
+                            <stop offset="60%" stop-color="#1c1917"/>
+                            <stop offset="100%" stop-color="#02040a"/>
+                        </linearGradient>
+                        <linearGradient id="laser-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#38bdf8"/>
+                            <stop offset="100%" stop-color="#22d3ee"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#mine-grad)"/>
+                    <circle cx="50" cy="30" r="1.5" fill="#fff" opacity="0.8"/>
+                    <circle cx="350" cy="120" r="1" fill="#fff" opacity="0.4"/>
+                    <circle cx="280" cy="30" r="1.2" fill="#38bdf8" opacity="0.5"/>
+                    <circle cx="100" cy="160" r="1.8" fill="#f59e0b" opacity="0.6"/>
+                    <g transform="translate(140, 95) scale(1.1)">
+                        <path d="M -40 -15 C -35 -40 10 -45 35 -25 C 55 -5 60 25 35 45 C 15 55 -30 45 -45 25 C -55 10 -45 10 -40 -15 Z" fill="#44403c" stroke="#57534e" stroke-width="2"/>
+                        <path d="M -40 -15 C -35 -40 10 -45 35 -25 C 45 -15 30 10 15 10 C 0 10 -30 25 -45 25 C -55 10 -45 10 -40 -15 Z" fill="#57534e" opacity="0.5"/>
+                        <ellipse cx="-15" cy="-15" rx="10" ry="7" fill="#292524" stroke="#78716c" stroke-width="1"/>
+                        <ellipse cx="15" cy="15" rx="14" ry="9" fill="#292524" stroke="#78716c" stroke-width="1"/>
+                        <ellipse cx="20" cy="-10" rx="8" ry="5" fill="#292524" stroke="#78716c" stroke-width="0.8"/>
+                        <path d="M -10 -5 Q -5 5 10 -5" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" filter="drop-shadow(0 0 4px #38bdf8)"/>
+                        <path d="M 5 20 Q 15 25 25 15" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" filter="drop-shadow(0 0 3px #fbbf24)"/>
+                    </g>
+                    <g transform="translate(290, 110)">
+                        <line x1="60" y1="40" x2="20" y2="0" stroke="#94a3b8" stroke-width="7" stroke-linecap="round"/>
+                        <circle cx="20" cy="0" r="6" fill="#475569"/>
+                        <line x1="20" y1="0" x2="-25" y2="-20" stroke="#cbd5e1" stroke-width="5" stroke-linecap="round"/>
+                        <circle cx="-25" cy="-20" r="5" fill="#475569"/>
+                        <path d="M -25 -25 L -40 -15 L -20 -10 Z" fill="#64748b" stroke="#475569" stroke-width="1"/>
+                        <line x1="-38" y1="-17" x2="-110" y2="-22" stroke="url(#laser-glow)" stroke-width="4.5" stroke-linecap="round" filter="drop-shadow(0 0 6px #22d3ee)"/>
+                        <line x1="-38" y1="-17" x2="-110" y2="-22" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+                        <circle cx="-110" cy="-22" r="5" fill="#fff" filter="drop-shadow(0 0 5px #22d3ee)"/>
+                        <path d="M -110 -22 L -115 -32 M -110 -22 L -120 -18 M -110 -22 L -115 -12" stroke="#22d3ee" stroke-width="1.5" stroke-linecap="round"/>
+                    </g>
+                </svg>
+                `,
+                popupImageSvg: `
+                <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="space-grad" cx="50%" cy="50%" r="75%">
+                            <stop offset="0%" stop-color="#0a122c"/>
+                            <stop offset="70%" stop-color="#010207"/>
+                            <stop offset="100%" stop-color="#000000"/>
+                        </radialGradient>
+                        <linearGradient id="atmos-limb-blue" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop offset="0%" stop-color="#06b6d4" stop-opacity="1"/>
+                            <stop offset="35%" stop-color="#2563eb" stop-opacity="0.75"/>
+                            <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#space-grad)"/>
+                    <path d="M -100 450 C 50 395 450 395 600 450 L 600 550 L -100 550 Z" fill="#080e1a"/>
+                    <path d="M -100 450 C 50 395 450 395 600 450" stroke="url(#atmos-limb-blue)" stroke-width="22" fill="none" filter="blur(6px)"/>
+                    <path d="M -100 445 C 50 390 450 390 600 445" stroke="#e0f2fe" stroke-width="1.5" fill="none" opacity="0.95"/>
+
+                    <!-- Realistic Floating Giant Asteroid surface -->
+                    <g transform="translate(340, 160) scale(1.35)">
+                        <path d="M -50 -10 C -45 -45 15 -50 45 -25 C 65 -5 70 30 40 55 C 15 65 -35 55 -55 30 C -65 10 -55 10 -50 -10 Z" fill="#2d2a28" stroke="#3f3a36" stroke-width="1.5"/>
+                        <path d="M -50 -10 C -45 -45 15 -50 45 -25 C 55 -15 35 15 20 15 C 0 15 -35 30 -55 30 C -65 10 -55 10 -50 -10 Z" fill="#3a3532" opacity="0.7"/>
+                        <path d="M -15 0 Q 0 10 15 -5" stroke="#00d8ff" stroke-width="3.5" stroke-linecap="round" filter="drop-shadow(0 0 5px #06b6d4)"/>
+                    </g>
+
+                    <!-- Astronaut Engineer drilling with Plasma tool -->
+                    <g transform="translate(150, 225) rotate(12) scale(1.15)">
+                        <rect x="-24" y="-20" width="48" height="55" rx="8" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+                        <path d="M -22 10 C -22 -5 -10 -15 0 -15 C 10 -15 22 -5 22 10 L 18 50 L -18 50 Z" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+                        <circle cx="0" cy="-12" r="15" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+                        <path d="M -11 -14 C -8 -22 8 -22 11 -14 C 12 -7 -12 -7 -11 -14 Z" fill="#06b6d4" stroke="#0891b2" stroke-width="1.5" filter="drop-shadow(0 0 5px #06b6d4)"/>
+                        <line x1="38" y1="-2" x2="220" y2="-65" stroke="#06b6d4" stroke-width="6" stroke-linecap="round" filter="drop-shadow(0 0 8px #06b6d4)"/>
+                        <line x1="38" y1="-2" x2="220" y2="-65" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                    </g>
+                </svg>
+                `
+            },
+            {
+                id: "space-architect",
+                title: "สถาปนิกอวกาศ (Space Architect)",
+                category: "Humanities",
+                shortDesc: "ออกแบบโครงสร้างถิ่นที่อยู่บนดวงจันทร์และดาวอังคาร โดยคำนึงถึงแรงดันบรรยากาศ การป้องกันรังสี และจิตวิทยาของนักบินอวกาศ",
+                salary: "฿100,000 - ฿280,000",
+                skills: "3D Modeling, Materials Science, Human Factors",
+                roadmap: "เรียนจบปริญญาตรีด้านสถาปัตยกรรมศาสตร์ จากนั้นอบรมวิจัยเรื่องสถาวะแวดล้อมจำลอง (Extreme Environment Design)",
+                icon: "home",
+                isFeatured: true,
+                imageSvg: `
+                <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full rounded-xl overflow-hidden shadow-inner">
+                    <defs>
+                        <linearGradient id="dome-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#0f172a"/>
+                            <stop offset="50%" stop-color="#1e1b4b"/>
+                            <stop offset="100%" stop-color="#2d0619"/>
+                        </linearGradient>
+                        <linearGradient id="neon-structure" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#f43f5e"/>
+                            <stop offset="100%" stop-color="#ec4899"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#dome-grad)"/>
+                    <path d="M -20 200 L 80 140 L 160 170 L 280 120 L 420 200 Z" fill="#4c0519" opacity="0.6"/>
+                    <path d="M 50 200 L 180 150 L 300 180 L 440 135 Z" fill="#2d0619"/>
+                    <g opacity="0.25">
+                        <line x1="50" y1="200" x2="160" y2="160" stroke="#f43f5e" stroke-width="1"/>
+                        <line x1="150" y1="200" x2="220" y2="160" stroke="#f43f5e" stroke-width="1"/>
+                        <line x1="250" y1="200" x2="280" y2="160" stroke="#f43f5e" stroke-width="1"/>
+                        <line x1="350" y1="200" x2="340" y2="160" stroke="#f43f5e" stroke-width="1"/>
+                        <path d="M 0 170 Q 200 160 400 170" stroke="#f43f5e" stroke-width="1"/>
+                        <path d="M 0 185 Q 200 175 400 185" stroke="#f43f5e" stroke-width="1"/>
+                    </g>
+                    <g transform="translate(200, 130)">
+                        <ellipse cx="0" cy="30" rx="90" ry="22" stroke="#ec4899" stroke-width="2.5" fill="rgba(244, 63, 94, 0.08)" filter="drop-shadow(0 0 6px rgba(236, 72, 153, 0.4))"/>
+                        <path d="M -80 20 C -80 -40 80 -40 80 20" stroke="url(#neon-structure)" stroke-width="2" fill="none" />
+                        <path d="M -55 25 C -55 -25 55 -25 55 25" stroke="url(#neon-structure)" stroke-width="1.5" fill="none" opacity="0.8"/>
+                        <line x1="-80" y1="20" x2="-45" y2="-10" stroke="#ec4899" stroke-width="1.5"/>
+                        <line x1="-45" y1="-10" x2="0" y2="-25" stroke="#ec4899" stroke-width="1.5"/>
+                        <line x1="0" y1="-25" x2="45" y2="-10" stroke="#ec4899" stroke-width="1.5"/>
+                        <line x1="45" y1="-10" x2="80" y2="20" stroke="#ec4899" stroke-width="1.5"/>
+                        <line x1="-55" y1="25" x2="-25" y2="0" stroke="#ec4899" stroke-width="1"/>
+                        <circle cx="0" cy="-5" r="8" fill="#fff" filter="drop-shadow(0 0 8px #f43f5e)"/>
+                    </g>
+                </svg>
+                `,
+                popupImageSvg: `
+                <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="space-grad" cx="50%" cy="50%" r="75%">
+                            <stop offset="0%" stop-color="#14061a"/>
+                            <stop offset="70%" stop-color="#020308"/>
+                            <stop offset="100%" stop-color="#000000"/>
+                        </radialGradient>
+                        <linearGradient id="atmos-limb-mars" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop offset="0%" stop-color="#f43f5e" stop-opacity="1"/>
+                            <stop offset="35%" stop-color="#991b1b" stop-opacity="0.65"/>
+                            <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#space-grad)"/>
+                    <path d="M -100 440 C 50 385 450 385 600 440 L 600 550 L -100 550 Z" fill="#2d0619"/>
+                    <path d="M -100 440 C 50 385 450 385 600 440" stroke="url(#atmos-limb-mars)" stroke-width="20" fill="none" filter="blur(6px)"/>
+                    <path d="M -100 435 C 50 380 450 380 600 435" stroke="#fecdd3" stroke-width="1.5" fill="none" opacity="0.95"/>
+                    <g transform="translate(320, 340) scale(0.95)">
+                        <ellipse cx="0" cy="50" rx="90" ry="25" stroke="#f43f5e" stroke-width="2" fill="rgba(244, 63, 94, 0.1)"/>
+                        <path d="M -80 40 C -80 -30 80 -30 80 40" stroke="#f43f5e" stroke-width="2" stroke-dasharray="3 3"/>
+                    </g>
+                    <g transform="translate(160, 185) rotate(-12) scale(1.15)">
+                        <rect x="-22" y="-15" width="44" height="50" rx="8" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+                        <path d="M -20 12 C -20 -3 -10 -12 0 -12 C 10 -12 20 -3 20 12 L 16 55 L -16 55 Z" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+                        <circle cx="0" cy="-10" r="15" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+                        <path d="M -11 -13 C -8 -20 8 -20 11 -13 C 13 -6 -13 -6 -11 -13 Z" fill="#f43f5e" stroke="#e11d48" stroke-width="1.5" filter="drop-shadow(0 0 5px #f43f5e)"/>
+                        <polygon points="-75,-25 -45,-55 -15,-55 -35,5" fill="rgba(244, 63, 94, 0.18)" stroke="#f43f5e" stroke-width="1.5" filter="drop-shadow(0 0 5px #f43f5e)"/>
+                    </g>
+                </svg>
+                `
+            },
+            {
+                id: "astrobiologist",
+                title: "นักชีววิทยาอวกาศ (Astrobiologist)",
+                category: "Sciences",
+                shortDesc: "ค้นหาเบาะแสและตัวแทนสิ่งมีชีวิตนอกโลก ศึกษากลไกการอยู่รอดของจุลชีพในอวกาศ เพื่อปกป้องโลกและดาวอังคาร",
+                salary: "฿90,000 - ฿240,000",
+                skills: "Microbiology, Organic Chemistry, Astronomy",
+                roadmap: "เรียนคณะวิทยาศาสตร์ สาขาชีววิทยา เคมี หรือฟิสิกส์ จากนั้นค้นคว้าทำวิจัยเรื่องชีววิทยาทางทะเลน้ำลึกเพื่อเทียบเคียงอวกาศ",
+                icon: "microscope",
+                isFeatured: false,
+                imageSvg: `
+                <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full rounded-xl overflow-hidden shadow-inner">
+                    <defs>
+                        <linearGradient id="bio-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#021c1e"/>
+                            <stop offset="60%" stop-color="#052e16"/>
+                            <stop offset="100%" stop-color="#02040a"/>
+                        </linearGradient>
+                        <linearGradient id="neon-dna" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#10b981"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#bio-grad)"/>
+                    <circle cx="120" cy="50" r="1" fill="#fff" opacity="0.8"/>
+                    <circle cx="280" cy="160" r="1.5" fill="#10b981" opacity="0.4"/>
+                    <circle cx="200" cy="100" r="85" stroke="url(#neon-dna)" stroke-width="1" stroke-dasharray="6 4" opacity="0.3" />
+                    <circle cx="200" cy="100" r="75" stroke="#10b981" stroke-width="1.5" fill="rgba(16, 185, 129, 0.03)" opacity="0.4" />
+                    <g transform="translate(140, 70)" filter="drop-shadow(0 0 6px rgba(16, 185, 129, 0.5))">
+                        <path d="M -10 -5 C -25 -20 -35 15 -15 20 C 5 25 15 -10 -10 -5 Z" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" stroke-width="1.5"/>
+                        <circle cx="-12" cy="5" r="4" fill="#fff"/>
+                        <line x1="-20" y1="5" x2="-28" y2="8" stroke="#10b981" stroke-width="1"/>
+                        <line x1="-12" y1="-3" x2="-15" y2="-12" stroke="#10b981" stroke-width="1"/>
+                    </g>
+                    <g transform="translate(200, 100) rotate(-35) scale(0.9)">
+                        <path d="M -80 0 Q -40 -30 0 0 T 80 0" stroke="#06b6d4" stroke-width="3.5" fill="none" filter="drop-shadow(0 0 4px #06b6d4)"/>
+                        <path d="M -80 0 Q -40 30 0 0 T 80 0" stroke="#10b981" stroke-width="3.5" fill="none" filter="drop-shadow(0 0 4px #10b981)"/>
+                        <line x1="-60" y1="-12" x2="-60" y2="12" stroke="#fff" stroke-width="1.5" opacity="0.7"/>
+                        <circle cx="-60" cy="-12" r="3" fill="#06b6d4"/>
+                        <circle cx="-60" cy="12" r="3" fill="#10b981"/>
+                    </g>
+                </svg>
+                `,
+                popupImageSvg: `
+                <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="space-grad" cx="50%" cy="50%" r="75%">
+                            <stop offset="0%" stop-color="#021c1e"/>
+                            <stop offset="70%" stop-color="#020308"/>
+                            <stop offset="100%" stop-color="#000000"/>
+                        </radialGradient>
+                        <linearGradient id="atmos-limb-bio" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop offset="0%" stop-color="#059669" stop-opacity="1"/>
+                            <stop offset="40%" stop-color="#10b981" stop-opacity="0.65"/>
+                            <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#space-grad)"/>
+                    <path d="M -100 450 C 50 395 450 395 600 450 L 600 550 L -100 550 Z" fill="#022c22"/>
+                    <path d="M -100 450 C 50 395 450 395 600 450" stroke="url(#atmos-limb-bio)" stroke-width="20" fill="none" filter="blur(6px)"/>
+                    <path d="M -100 445 C 50 390 450 390 600 445" stroke="#a7f3d0" stroke-width="1.5" fill="none" opacity="0.95"/>
+                    <g transform="translate(200, 220) rotate(4) scale(1.15)">
+                        <rect x="-22" y="-18" width="44" height="52" rx="8" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+                        <path d="M -20 12 C -20 -3 -10 -12 0 -12 C 10 -12 20 -3 20 12 L 16 55 L -16 55 Z" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+                        <circle cx="0" cy="-10" r="15" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+                        <path d="M -11 -13 C -8 -20 8 -20 11 -13 C 13 -6 -13 -6 -11 -13 Z" fill="#059669" stroke="#10b981" stroke-width="1.5" filter="drop-shadow(0 0 5px #10b981)"/>
+                        <path d="M -25 -8 L -30 -22" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" filter="drop-shadow(0 0 5px #10b981)"/>
+                    </g>
+                </svg>
+                `
+            },
+            {
+                id: "space-medicine",
+                title: "แพทย์อวกาศ (Space Medicine Specialist)",
+                category: "Sciences",
+                shortDesc: "วิจัย ป้องกัน และรักษาความเสื่อมสภาพของร่างกายมนุษย์ในสภาวะแรงโน้มถ่วงต่ำ เช่น มวลกระดูกลดลง รังสีคอสมิก และสุขภาพจิต",
+                salary: "฿200,000 - ฿500,000",
+                skills: "Medicine, Physiology, Extreme Environment Therapy",
+                roadmap: "เรียนแพทยศาสตร์บัณฑิต จากนั้นต่อบอร์ดเฉพาะทางเวชศาสตร์การบิน (Aerospace Medicine) หรือสรีรวิทยาอวกาศ",
+                icon: "heart-pulse",
+                isFeatured: false,
+                imageSvg: `
+                <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full rounded-xl overflow-hidden shadow-inner">
+                    <defs>
+                        <linearGradient id="med-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#11051b"/>
+                            <stop offset="60%" stop-color="#020617"/>
+                            <stop offset="100%" stop-color="#18000a"/>
+                        </linearGradient>
+                        <linearGradient id="neon-heart" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ec4899"/>
+                            <stop offset="100%" stop-color="#ef4444"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#med-grad)"/>
+                    <path d="M 50 110 L 120 110 L 135 70 L 150 140 L 165 95 L 180 110 L 350 110" stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0 0 6px #ec4899)"/>
+                    <g transform="translate(200, 100) scale(1.15)">
+                        <circle cx="0" cy="0" r="45" stroke="url(#neon-heart)" stroke-width="1.5" fill="rgba(236, 72, 153, 0.05)" filter="drop-shadow(0 0 10px rgba(236, 72, 153, 0.3))"/>
+                        <path d="M -18 -5 H -5 V -18 H 5 V -5 H 18 V 5 H 5 V 18 H -5 V 5 H -18 Z" fill="url(#neon-heart)"/>
+                    </g>
+                </svg>
+                `,
+                popupImageSvg: `
+                <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="space-grad" cx="50%" cy="50%" r="75%">
+                            <stop offset="0%" stop-color="#180521"/>
+                            <stop offset="70%" stop-color="#020308"/>
+                            <stop offset="100%" stop-color="#000000"/>
+                        </radialGradient>
+                        <linearGradient id="atmos-limb-pink" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop offset="0%" stop-color="#db2777" stop-opacity="1"/>
+                            <stop offset="35%" stop-color="#be185d" stop-opacity="0.65"/>
+                            <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#space-grad)"/>
+                    <path d="M -100 450 C 50 395 450 395 600 450 L 600 550 L -100 550 Z" fill="#200410"/>
+                    <path d="M -100 450 C 50 395 450 395 600 450" stroke="url(#atmos-limb-pink)" stroke-width="20" fill="none" filter="blur(6px)"/>
+
+                    <path d="M 50 300 L 150 300 L 170 240 L 190 350 L 210 280 L 230 300 L 450 300" stroke="#ec4899" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="drop-shadow(0 0 8px #db2777)" opacity="0.8"/>
+
+                    <g transform="translate(250, 175) rotate(-8) scale(1.15)">
+                        <rect x="-22" y="-18" width="44" height="52" rx="8" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+                        <path d="M -20 12 C -20 -3 -10 -12 0 -12 C 10 -12 20 -3 20 12 L 16 55 L -16 55 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+                        <circle cx="0" cy="-10" r="15" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+                        <path d="M -11 -13 C -8 -20 8 -20 11 -13 C 13 -6 -13 -6 -11 -13 Z" fill="#db2777" stroke="#ec4899" stroke-width="1.5" filter="drop-shadow(0 0 5px #ec4899)"/>
+                    </g>
+                </svg>
+                `
+            },
+            {
+                id: "cubesat-engineer",
+                title: "วิศวกรระบบดาวเทียมขนาดเล็ก (CubeSat Engineer)",
+                category: "Engineering",
+                shortDesc: "สร้าง เขียนซอฟต์แวร์ควบคุม และติดตั้งเครื่องมือตรวจวัดลงในดาวเทียมขนาดจิ๋ว เพื่อสังเกตการณ์โลกหรือสื่อสารอินเทอร์เน็ตแห่งอนาคต",
+                salary: "฿80,000 - ฿200,000",
+                skills: "Embedded Systems, Telecommunications, CAD Design",
+                roadmap: "ศึกษาด้านวิศวกรรมคอมพิวเตอร์, อิเล็กทรอนิกส์ หรือวิศวกรรมการบินและอวกาศ มีส่วนร่วมในชมรมวิจัยดาวเทียมตั้งแต่มหาวิทยาลัย",
+                icon: "cpu",
+                isFeatured: false,
+                imageSvg: `
+                <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full rounded-xl overflow-hidden shadow-inner">
+                    <defs>
+                        <linearGradient id="sat-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#02040a"/>
+                            <stop offset="60%" stop-color="#030712"/>
+                            <stop offset="100%" stop-color="#0b1329"/>
+                        </linearGradient>
+                        <linearGradient id="planet-color" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#1e3a8a"/>
+                            <stop offset="60%" stop-color="#0284c7"/>
+                            <stop offset="100%" stop-color="#0d9488"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#sat-grad)"/>
+                    <circle cx="70" cy="150" r="110" fill="url(#planet-color)" filter="drop-shadow(0 0 15px rgba(2, 132, 199, 0.45))"/>
+                    <g transform="translate(240, 75) scale(0.9)">
+                        <polygon points="-70,5 -30,-15 -30,25 -70,45" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+                    </g>
+                </svg>
+                `,
+                popupImageSvg: `
+                <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="space-grad" cx="50%" cy="50%" r="75%">
+                            <stop offset="0%" stop-color="#020813"/>
+                            <stop offset="70%" stop-color="#010206"/>
+                            <stop offset="100%" stop-color="#000000"/>
+                        </radialGradient>
+                        <linearGradient id="atmos-limb-blue" x1="0%" y1="100%" x2="0%" y2="0%">
+                            <stop offset="0%" stop-color="#3b82f6" stop-opacity="1"/>
+                            <stop offset="35%" stop-color="#1e3a8a" stop-opacity="0.65"/>
+                            <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#space-grad)"/>
+                    <path d="M -100 450 C 50 395 450 395 600 450 L 600 550 L -100 550 Z" fill="#080e1e"/>
+                    <path d="M -100 450 C 50 395 450 395 600 450" stroke="url(#atmos-limb-blue)" stroke-width="20" fill="none" filter="blur(6px)"/>
+                    <g transform="translate(160, 220) rotate(-5) scale(1.15)">
+                        <rect x="-22" y="-18" width="44" height="52" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+                        <path d="M -20 12 C -20 -3 -10 -12 0 -12 C 10 -12 20 -3 20 12 L 16 55 L -16 55 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+                        <circle cx="0" cy="-10" r="15" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+                        <path d="M -11 -13 C -8 -20 8 -20 11 -13 C 13 -6 -13 -6 -11 -13 Z" fill="#2563eb" stroke="#3b82f6" stroke-width="1.5" filter="drop-shadow(0 0 5px #3b82f6)"/>
+                    </g>
+                </svg>
+                `
+            }
+        ];
+
+        const QUIZ_QUESTIONS = [
+            {
+                title: "ข้อที่ 1: งานประเภทใดต่อไปนี้ที่คุณรู้สึกสนุกและตื่นเต้นที่ได้ลงมือทำมากที่สุด?",
+                options: [
+                    { text: "แกะพาร์ทประกอบโครงสร้าง เขียนโค้ดควบคุม หรือสร้างกลไกจำลอง", score: { Engineering: 3, Sciences: 1 } },
+                    { text: "ทำวิจัย ส่องกล้อง สังเกตสิ่งมีชีวิตขนาดเล็ก หรือศึกษาปฏิกิริยาเคมี", score: { Sciences: 3, Engineering: 1 } },
+                    { text: "วาดรูป ออกแบบกราฟิก วางคอนเซ็ปต์หน้าตา หรือแต่งสไตล์ที่อยู่อาศัย", score: { Humanities: 3 } },
+                    { text: "วิเคราะห์คดีความ เจรจาหาข้อยุติ วางแผนธุรกิจ หรืออ่านเงื่อนไขสัญญา", score: { Humanities: 3 } }
+                ]
+            },
+            {
+                title: "ข้อที่ 2: สภาพแวดล้อมการทำงานของยานจำลองแบบไหนที่คุณคิดว่าน่าสนใจที่สุด?",
+                options: [
+                    { text: "แล็บอวกาศ คัดแยกตัวอย่างจุลินทรีย์ทนทานรังสีคอสมิก", score: { Sciences: 3 } },
+                    { text: "โรงงานผลิตชิ้นส่วนจรวดและซอฟต์แวร์นำร่องแบบไร้ที่ติ", score: { Engineering: 3 } },
+                    { text: "ห้องควบคุมภารกิจ ออกแบบที่พักเสมือนจริงให้ลูกเรือมีกำลังใจสูง", score: { Humanities: 2, Engineering: 1 } },
+                    { text: "เวทีเจรจาระหว่างผู้แทนอุตสาหกรรมเรื่องสิทธิ์ในทรัพยากรอวกาศ", score: { Humanities: 3 } }
+                ]
+            },
+            {
+                title: "ข้อที่ 3: หากมนุษยชาติสามารถตั้งหลักแหล่งถาวรบนดาวอังคารได้ คุณอยากช่วยแก้ปัญหาส่วนใด?",
+                options: [
+                    { text: "การสร้างและฟื้นฟูระบบการเกษตร รวมถึงหาแหล่งอาหารและน้ำจากจุลชีพ", score: { Sciences: 3 } },
+                    { text: "การออกแบบพอร์ทรัล ระบบรับส่ง และโครงสร้างอาคารที่ต้านทานสภาพอากาศรุนแรง", score: { Engineering: 2, Humanities: 1 } },
+                    { text: "ร่างกฎหมายพลเมืองใหม่เพื่อจัดระเบียบและแก้ปัญหาข้อพิพาทดินแดน", score: { Humanities: 3 } },
+                    { text: "การรักษาสุขภาพทางกายและจิตวิทยานักบินที่ต้องอยู่ในที่แคบเป็นปีๆ", score: { Sciences: 3 } }
+                ]
+            },
+            {
+                title: "ข้อที่ 4: วิชาโปรดของคุณในโรงเรียนหรือมหาวิทยาลัยคือข้อใด?",
+                options: [
+                    { text: "ฟิสิกส์, คณิตศาสตร์, วิศวกรรมคอมพิวเตอร์", score: { Engineering: 3 } },
+                    { text: "ชีววิทยา, เคมี, ดาราศาสตร์พื้นฐาน", score: { Sciences: 3 } },
+                    { text: "ศิลปะ, ออกแบบ, สถาปัตยกรรม, มนุษยศาสตร์", score: { Humanities: 3 } },
+                    { text: "ภาษาไทย, สังคมศึกษา, การเมืองการปกครอง, ภาษาอังกฤษ", score: { Humanities: 3 } }
+                ]
+            },
+            {
+                title: "ข้อที่ 5: คุณคิดว่าอนาคตอวกาศจะเติบโตได้มั่นคงด้วยปัจจัยใดมากที่สุด?",
+                options: [
+                    { text: "การสร้างหุ่นยนต์อัจฉริยะที่ช่วยขุดเจาะแร่ธาตุโดยไม่ต้องส่งคนไปเสี่ยงภัย", score: { Engineering: 3 } },
+                    { text: "การทำความเข้าใจสรีรวิทยาและพันธุกรรมเพื่อส่งต่อเผ่าพันธุ์สู่ห้วงอวกาศลึก", score: { Sciences: 3 } },
+                    { text: "การจัดสรรที่อยู่อาศัยที่สวยงาม ปลอดภัย และมีสิ่งอํานวยความสะดวกระดับพรีเมียม", score: { Humanities: 2, Engineering: 1 } },
+                    { text: "ข้อตกลงและการจัดการผลประโยชน์เชิงพาณิชย์ที่เป็นธรรมกับบริษัทเอกชนทั่วโลก", score: { Humanities: 3 } }
+                ]
+            }
+        ];
+
+        // --- GLOBAL VARIABLES ---
+        let currentTab = 'home';
+        let currentCareerCategory = 'All';
+        let quizCurrentIndex = 0;
+        let quizScores = { Engineering: 0, Sciences: 0, Humanities: 0 };
+        const apiKey = ""; // Provided by execution environment
+
+        // --- ON LOAD ---
+        window.onload = function() {
+            lucide.createIcons();
+            renderFeaturedCareers();
+            renderCareersFull();
+            initStarfield();
+            
+            // Automatically initialize with Space Lawyer on simulator tab load
+            loadCareerSim('space-lawyer');
+        };
+
+        // --- NAVIGATION SYSTEM ---
+        function switchTab(tabId) {
+            currentTab = tabId;
+            
+            document.getElementById('section-home').classList.add('hidden');
+            document.getElementById('section-careers').classList.add('hidden');
+            document.getElementById('section-quiz').classList.add('hidden');
+            document.getElementById('section-simulator').classList.add('hidden');
+            document.getElementById('section-advisor').classList.add('hidden');
+
+            const navs = ['nav-home', 'nav-careers', 'nav-quiz', 'nav-simulator', 'nav-advisor'];
+            navs.forEach(navId => {
+                const element = document.getElementById(navId);
+                if (element) {
+                    element.classList.remove('text-blue-400', 'bg-slate-850/50', 'border', 'border-blue-500/20');
+                    element.classList.add('text-slate-400', 'hover:text-white', 'hover:bg-slate-800/40');
+                }
+            });
+
+            const targetSection = document.getElementById(`section-${tabId}`);
+            if (targetSection) targetSection.classList.remove('hidden');
+
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.add('text-blue-400', 'bg-slate-850/50', 'border', 'border-blue-500/20');
+                activeNav.classList.remove('text-slate-400', 'hover:text-white', 'hover:bg-slate-800/40');
+            }
+
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- RENDER FUNCTIONS ---
+        function renderFeaturedCareers() {
+            const list = document.getElementById('featured-careers-list');
+            list.innerHTML = '';
+            
+            const featured = CAREER_DB.filter(c => c.isFeatured);
+            featured.forEach(c => {
+                const card = createCareerCard(c);
+                list.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        function renderCareersFull() {
+            const grid = document.getElementById('careers-full-grid');
+            grid.innerHTML = '';
+
+            let filtered = CAREER_DB;
+            if (currentCareerCategory !== 'All') {
+                filtered = CAREER_DB.filter(c => c.category === currentCareerCategory);
+            }
+
+            filtered.forEach(c => {
+                const card = createCareerCard(c);
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        function createCareerCard(c) {
+            const card = document.createElement('div');
+            card.className = "glass p-6 rounded-2xl relative overflow-hidden group border border-blue-500/15 career-card-hover transition-all duration-300 flex flex-col justify-between cursor-pointer";
+            card.setAttribute("onclick", `openCareerDossier('${c.id}')`);
+            
+            let iconMarkup = '<i data-lucide="sparkles" class="w-6 h-6"></i>';
+            if (c.icon === 'gavel') iconMarkup = '<i data-lucide="gavel" class="w-6 h-6"></i>';
+            else if (c.icon === 'pickaxe') iconMarkup = '<i data-lucide="drill" class="w-6 h-6"></i>';
+            else if (c.icon === 'home') iconMarkup = '<i data-lucide="home" class="w-6 h-6"></i>';
+            else if (c.icon === 'microscope') iconMarkup = '<i data-lucide="microscope" class="w-6 h-6"></i>';
+            else if (c.icon === 'heart-pulse') iconMarkup = '<i data-lucide="heart-pulse" class="w-6 h-6"></i>';
+            else if (c.icon === 'cpu') iconMarkup = '<i data-lucide="cpu" class="w-6 h-6"></i>';
+
+            card.innerHTML = `
+                <div>
+                    <!-- Holographic Illustration Box -->
+                    <div class="w-full h-44 mb-5 rounded-xl overflow-hidden border border-blue-500/20 bg-slate-950 relative">
+                        ${c.imageSvg}
+                        <div class="absolute inset-0 bg-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <span class="px-3 py-1.5 rounded-full bg-slate-900/95 border border-blue-500/40 text-blue-400 font-mono text-[10px] tracking-widest uppercase flex items-center gap-1">
+                                <i data-lucide="eye" class="w-3.5 h-3.5"></i> สแกนแฟ้มข้อมูลลับ
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                            ${iconMarkup}
+                        </div>
+                        <span class="text-[10px] font-mono tracking-wider uppercase bg-slate-900/60 text-slate-400 px-2 py-1 rounded border border-blue-500/10">${c.category}</span>
+                    </div>
+                    <h3 class="font-bold text-lg text-white group-hover:text-blue-400 transition-colors mb-2">${c.title}</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-4">${c.shortDesc}</p>
+                </div>
+                <div class="space-y-4 pt-4 border-t border-blue-500/10">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-slate-500">รายได้คาดการณ์:</span>
+                        <span class="text-emerald-400 font-semibold">${c.salary}</span>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-[10px] text-slate-500 uppercase font-semibold">ทักษะสำคัญ:</span>
+                        <p class="text-[11px] text-slate-300 font-mono">${c.skills}</p>
+                    </div>
+                    <div class="p-3 bg-slate-950/80 rounded-lg border border-slate-900 text-[11px] text-slate-400 leading-normal">
+                        <strong>เส้นทาง:</strong> ${c.roadmap}
+                    </div>
+                    <button class="w-full py-2 rounded-xl bg-blue-600/10 border border-blue-500/20 group-hover:bg-blue-600 group-hover:text-white text-blue-300 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
+                        <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i> เปิดแฟ้มข้อมูลโฮโลแกรม 3D
+                    </button>
+                </div>
+            `;
+            return card;
+        }
+
+        function filterCareers() {
+            const searchVal = document.getElementById('career-search-input').value.toLowerCase();
+            const grid = document.getElementById('careers-full-grid');
+            grid.innerHTML = '';
+
+            let filtered = CAREER_DB;
+            if (currentCareerCategory !== 'All') {
+                filtered = CAREER_DB.filter(c => c.category === currentCareerCategory);
+            }
+
+            filtered = filtered.filter(c => 
+                c.title.toLowerCase().includes(searchVal) || 
+                c.shortDesc.toLowerCase().includes(searchVal) || 
+                c.skills.toLowerCase().includes(searchVal)
+            );
+
+            filtered.forEach(c => {
+                const card = createCareerCard(c);
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        function setCareerCategory(cat) {
+            currentCareerCategory = cat;
+            const categories = ['All', 'Engineering', 'Sciences', 'Humanities'];
+            categories.forEach(c => {
+                const button = document.getElementById(`cat-${c}`);
+                if (button) {
+                    if (c === cat) {
+                        button.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white border border-blue-500/30 transition-all";
+                    } else {
+                        button.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700 transition-all";
+                    }
+                }
+            });
+            renderCareersFull();
+        }
+
+        // --- INTERACTIVE DOSSIER MODAL POP-UP LOGIC ---
+        function openCareerDossier(careerId) {
+            const c = CAREER_DB.find(item => item.id === careerId);
+            if (!c) return;
+
+            document.getElementById('modal-career-title').innerText = c.title;
+            document.getElementById('modal-career-desc').innerText = c.shortDesc;
+            document.getElementById('modal-career-salary').innerText = c.salary;
+            document.getElementById('modal-career-skills').innerText = c.skills;
+            document.getElementById('modal-career-roadmap').innerText = c.roadmap;
+            
+            const catBadge = document.getElementById('modal-career-cat');
+            catBadge.innerText = c.category === 'Engineering' ? 'ENGINEERING & TECH' : (c.category === 'Sciences' ? 'SCIENCES & RESEARCH' : 'HUMANITIES & DESIGN');
+
+            document.getElementById('modal-image-container').innerHTML = c.popupImageSvg || c.imageSvg;
+
+            const aiBtn = document.getElementById('modal-ai-btn');
+            aiBtn.setAttribute('onclick', `closeCareerModal(); askAIConsultant('${c.title}');`);
+
+            const modal = document.getElementById('career-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            lucide.createIcons();
+        }
+
+        function closeCareerModal() {
+            const modal = document.getElementById('career-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function closeCareerModalOutside(e) {
+            const modalContent = document.getElementById('career-modal-content');
+            if (!modalContent.contains(e.target)) {
+                closeCareerModal();
+            }
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeCareerModal();
+            }
+        });
+
+        // --- SKILLS FINDER QUIZ LOGIC ---
+        function startQuiz() {
+            quizCurrentIndex = 0;
+            quizScores = { Engineering: 0, Sciences: 0, Humanities: 0 };
+            
+            document.getElementById('quiz-intro-state').classList.add('hidden');
+            document.getElementById('quiz-result-state').classList.add('hidden');
+            document.getElementById('quiz-question-state').classList.remove('hidden');
+            
+            showQuizQuestion();
+        }
+
+        function showQuizQuestion() {
+            const q = QUIZ_QUESTIONS[quizCurrentIndex];
+            
+            const progressPct = ((quizCurrentIndex + 1) / QUIZ_QUESTIONS.length) * 100;
+            document.getElementById('quiz-current-num').innerText = quizCurrentIndex + 1;
+            document.getElementById('quiz-progress-text').innerText = `${Math.round(progressPct)}% Completed`;
+            document.getElementById('quiz-progress-bar').style.width = `${progressPct}%`;
+
+            document.getElementById('quiz-question-title').innerText = q.title;
+
+            const container = document.getElementById('quiz-options-container');
+            container.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-800/60 text-slate-300 hover:text-white text-sm transition-all flex items-center gap-3 group";
+                btn.onclick = () => selectQuizOption(opt.score);
+                btn.innerHTML = `
+                    <span class="w-8 h-8 rounded-lg bg-slate-950 border border-slate-800 group-hover:border-blue-500/30 flex items-center justify-center font-semibold text-xs text-slate-500 group-hover:text-blue-400 shrink-0">${String.fromCharCode(65 + idx)}</span>
+                    <span class="leading-relaxed">${opt.text}</span>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        function selectQuizOption(score) {
+            for (const category in score) {
+                if (quizScores[category] !== undefined) {
+                    quizScores[category] += score[category];
+                }
+            }
+
+            quizCurrentIndex++;
+            if (quizCurrentIndex < QUIZ_QUESTIONS.length) {
+                showQuizQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-question-state').classList.add('hidden');
+            document.getElementById('quiz-loading-state').classList.remove('hidden');
+
+            setTimeout(() => {
+                document.getElementById('quiz-loading-state').classList.add('hidden');
+                document.getElementById('quiz-result-state').classList.remove('hidden');
+
+                let topCategory = 'Engineering';
+                let maxScore = -1;
+                for (const cat in quizScores) {
+                    if (quizScores[cat] > maxScore) {
+                        maxScore = quizScores[cat];
+                        topCategory = cat;
+                    }
+                }
+
+                let careerMatch = CAREER_DB.find(c => c.category === topCategory);
+                if (!careerMatch) careerMatch = CAREER_DB[0];
+
+                document.getElementById('quiz-match-name').innerText = careerMatch.title;
+                document.getElementById('quiz-match-cat').innerText = careerMatch.category === 'Engineering' ? 'Engineering & Technology' : (careerMatch.category === 'Sciences' ? 'Sciences & Research' : 'Social & Creative Design');
+                document.getElementById('quiz-match-skills').innerText = careerMatch.skills;
+                document.getElementById('quiz-match-salary').innerText = careerMatch.salary;
+                
+                let reasonText = "";
+                if (topCategory === 'Engineering') {
+                    reasonText = "คำตอบของคุณบ่งชี้ว่าคุณรักระบบการแก้ปัญหาเชิงตรรกะ การออกแบบโครงสร้าง หรือระบบอัตโนมัติ การทำงานในอวกาศต้องใช้ความแม่นยำทางระบบวิศวกรรมและการพัฒนาซอฟต์แวร์ที่แข็งแกร่งเป็นรากฐานสำคัญในการขับเคลื่อนยานสำรวจและดาวเทียม";
+                } else if (topCategory === 'Sciences') {
+                    reasonText = "คุณมีความหลงใหลใคร่รู้เกี่ยวกับสิ่งมีชีวิตและกลไกสรีรวิทยาที่เป็นแกนหลักของจักรวาล มนุษยชาติต้องการทักษะการศึกษาชีววิทยา เคมี ตลอดจนการแพทย์เพื่อช่วยให้นักบินอวกาศมีสรีระที่ทนต่อสภาพแรงดึงดูดต่ำและขยายอาณาเขตได้อย่างยั่งยืน";
+                } else {
+                    reasonText = "คุณเป็นผู้มองเห็นการเชื่อมโยงของมนุษย์ การสื่อสาร กฎระเบียบ ตลอดจนการจัดระเบียบโครงสร้างทางศิลปะและสัญญาการค้า โลกยุคเศรษฐกิจอวกาศใหม่ต้องการกรอบกฎหมาย คลังสถาปัตยกรรม และการจัดสรรทรัพยากรเพื่อให้ทุกอย่างเคลื่อนไปได้อย่างมีอารยธรรมและไม่ขัดแย้ง";
+                }
+                document.getElementById('quiz-match-reason').innerText = reasonText;
+
+                let iconName = 'award';
+                if (careerMatch.icon === 'pickaxe') iconName = 'drill';
+                else if (careerMatch.icon === 'gavel') iconName = 'gavel';
+                else if (careerMatch.icon === 'home') iconName = 'home';
+                else if (careerMatch.icon === 'microscope') iconName = 'microscope';
+                else if (careerMatch.icon === 'heart-pulse') iconName = 'heart-pulse';
+                else if (careerMatch.icon === 'cpu') iconName = 'cpu';
+
+                const iconElem = document.getElementById('quiz-match-icon');
+                iconElem.setAttribute('data-lucide', iconName);
+                lucide.createIcons();
+
+                // Inject Practical mini roleplay simulation based on careerMatch
+                injectPracticalSimulation(careerMatch.id);
+
+            }, 1500);
+        }
+
+        // --- INJECT PRACTICAL MINI ROLEPLAY SIMULATOR AFTER TEST ---
+        function injectPracticalSimulation(careerId) {
+            const simBox = document.getElementById('practical-sim-box');
+            
+            if (careerId === 'space-lawyer') {
+                simBox.innerHTML = `
+                    <div class="space-y-3">
+                        <span class="text-xs font-mono text-purple-400 block font-semibold">🔍 กรณีศึกษาข้อพิพาทอวกาศ #L990</span>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            บริษัทเหมืองเอกชนแอบตั้งค่ายขุดเจาะแร่แพลทินัมในรัศมี 1 กิโลเมตรจากฐานดวงจันทร์ของภาครัฐ โดยอ้างว่า "สนธิสัญญาเดิมไม่ได้ระบุห้ามการทำเหมืองรอบฐาน" 
+                            ในฐานะนักกฎหมายอวกาศ คุณจะตัดสินใจแก้ปัญหาอย่างไร?
+                        </p>
+                        <div class="grid grid-cols-1 gap-2 pt-2">
+                            <button onclick="handleSimVerdict('lawyer-correct')" class="w-full text-left p-3 rounded-lg bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-800 text-xs text-slate-300 transition-all flex items-center gap-2">
+                                <i data-lucide="scale" class="w-4 h-4 text-emerald-400"></i> สั่งระงับชั่วคราวและใช้มาตรการตั้งเขตความปลอดภัยสากล (Safety Zone) ตามสัญญา Artemis
+                            </button>
+                            <button onclick="handleSimVerdict('lawyer-incorrect')" class="w-full text-left p-3 rounded-lg bg-slate-900 border border-slate-800 hover:border-red-500/50 hover:bg-slate-800 text-xs text-slate-300 transition-all flex items-center gap-2">
+                                <i data-lucide="scale" class="w-4 h-4 text-red-400"></i> อนุญาตให้ขุดเจาะต่อโดยเก็บภาษี 45% เพื่อนำมาจัดสรรมมอบให้รัฐบาลดวงจันทร์
+                            </button>
+                        </div>
+                        <div id="sim-feedback" class="hidden mt-3 p-3 rounded bg-slate-900 text-xs text-slate-300 leading-normal border border-slate-800"></div>
+                    </div>
+                `;
+            } else if (careerId === 'asteroid-miner') {
+                simBox.innerHTML = `
+                    <div class="space-y-3">
+                        <span class="text-xs font-mono text-blue-400 block font-semibold">⛏️ การขุดเจาะสายแร่ดาวเคราะห์น้อย AX-400</span>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            เซนเซอร์ตรวจพบ "สายแร่แพลทินัมผสมเหล็กนิกเกิลเข้มข้น" ใต้เปลือกหินลึก 5 เมตร 
+                            ความดันภายในดาวเคราะห์น้อยกำลังแปรปรวน คุณควรปรับระดับกำลังเลเซอร์ขุดเจาะไปที่ค่าเท่าใดเพื่อป้องกันการระเบิดสูญเสียแรงดัน?
+                        </p>
+                        <div class="grid grid-cols-3 gap-2 pt-2">
+                            <button onclick="handleSimVerdict('miner-low')" class="p-2.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-yellow-500 hover:bg-slate-800 text-xs text-slate-300 transition-all text-center">
+                                ต่ำ (20% Power)
+                            </button>
+                            <button onclick="handleSimVerdict('miner-correct')" class="p-2.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-emerald-500 hover:bg-slate-800 text-xs text-slate-300 transition-all text-center">
+                                ปานกลาง (60% Power)
+                            </button>
+                            <button onclick="handleSimVerdict('miner-high')" class="p-2.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-red-500 hover:bg-slate-800 text-xs text-slate-300 transition-all text-center">
+                                สูงมาก (100% Power)
+                            </button>
+                        </div>
+                        <div id="sim-feedback" class="hidden mt-3 p-3 rounded bg-slate-900 text-xs text-slate-300 leading-normal border border-slate-800"></div>
+                    </div>
+                `;
+            } else {
+                simBox.innerHTML = `
+                    <div class="space-y-3">
+                        <span class="text-xs font-mono text-rose-400 block font-semibold">🏠 แผนฟื้นฟูเสถียรภาพโดมที่อยู่อาศัยดาวอังคาร</span>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            พายุฝุ่นดาวอังคารที่รุนแรงทำให้ผนัง Geodesic Dome ชั้นนอกได้รับความเสียหายและกักเก็บอุณหภูมิความดันได้น้อยลง 
+                            คุณต้องสั่งการเลือกวัสดุแผ่นกันความร้อนชนิดใดเพื่อปะรอยแผลได้อย่างถาวรและต้านทานรังสี?
+                        </p>
+                        <div class="grid grid-cols-2 gap-2 pt-2">
+                            <button onclick="handleSimVerdict('arch-correct')" class="w-full text-left p-3 rounded-lg bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-800 text-xs text-slate-300 transition-all flex items-center gap-2">
+                                แผงคอมโพสิตแอโรเจลซิลิกาผสมผงกราฟีนสลายรังสี
+                            </button>
+                            <button onclick="handleSimVerdict('arch-incorrect')" class="w-full text-left p-3 rounded-lg bg-slate-900 border border-slate-800 hover:border-red-500/50 hover:bg-slate-800 text-xs text-slate-300 transition-all flex items-center gap-2">
+                                แผงโครงสร้างเหล็กกล้าผสมคาร์บอนไฟเบอร์เคลือบเรซินสังเคราะห์
+                            </button>
+                        </div>
+                        <div id="sim-feedback" class="hidden mt-3 p-3 rounded bg-slate-900 text-xs text-slate-300 leading-normal border border-slate-800"></div>
+                    </div>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        function handleSimVerdict(outcome) {
+            const fb = document.getElementById('sim-feedback');
+            fb.classList.remove('hidden', 'border-emerald-500/30', 'bg-emerald-950/20', 'text-emerald-400', 'border-red-500/30', 'bg-red-950/20', 'text-red-400', 'border-yellow-500/30', 'bg-yellow-950/20', 'text-yellow-400');
+            
+            if (outcome === 'lawyer-correct') {
+                fb.className = "mt-3 p-3 rounded text-xs leading-normal border border-emerald-500/30 bg-emerald-950/20 text-emerald-400";
+                fb.innerHTML = "<strong>✅ การประเมิน: สำเร็จ!</strong> คุณระงับกรณีพิพาทได้สำเร็จตามสนธิสัญญาอวกาศสากล ทำให้ดวงจันทร์ยังคงเป็นพื้นที่ร่วมมือที่สันติ";
+            } else if (outcome === 'lawyer-incorrect') {
+                fb.className = "mt-3 p-3 rounded text-xs leading-normal border border-red-500/30 bg-red-950/20 text-red-400";
+                fb.innerHTML = "<strong>❌ การประเมิน: ล้มเหลว!</strong> การเก็บภาษีโดยพลการละเมิดหลักการห้ามรัฐเข้าครอบครองสิทธิอธิปไตยนอกโลก นำไปสู่ข้อขัดแย้งทางการเมืองของชาติต่าง ๆ";
+            } else if (outcome === 'miner-correct') {
+                fb.className = "mt-3 p-3 rounded text-xs leading-normal border border-emerald-500/30 bg-emerald-950/20 text-emerald-400";
+                fb.innerHTML = "<strong>✅ การประเมิน: เยี่ยมยอด!</strong> เลเซอร์ระดับ 60% เผาทำลายเปลือกนอกและกวาดสายแร่แพลทินัมได้หมดจดโดยไม่ทำลายโครงสร้างของดาวเคราะห์น้อย";
+            } else if (outcome === 'miner-low') {
+                fb.className = "mt-3 p-3 rounded text-xs leading-normal border border-yellow-500/30 bg-yellow-950/20 text-yellow-400";
+                fb.innerHTML = "<strong>⚠️ การประเมิน: กำลังเจาะไม่พอ!</strong> เลเซอร์กำลังต่ำไม่สามารถเจาะชั้นหินหนาได้สำเร็จก่อนที่พิกัดโคจรจะคลาดเคลื่อนลอยตัวหนีออกไป";
+            } else if (outcome === 'miner-high') {
+                fb.className = "mt-3 p-3 rounded text-xs leading-normal border border-red-500/30 bg-red-950/20 text-red-400";
+                fb.innerHTML = "<strong>❌ การประเมิน: อันตราย!</strong> เลเซอร์กำลังสูงเกินไปกระตุ้นช่องแก๊สภายใต้ดวงดาว นำไปสู่การระเบิดแยกเป็นเศษขยะอวกาศและทำลายแขนกลขุดเจาะ";
+            } else if (outcome === 'arch-correct') {
+                fb.className = "mt-3 p-3 rounded text-xs leading-normal border border-emerald-500/30 bg-emerald-950/20 text-emerald-400";
+                fb.innerHTML = "<strong>✅ การประเมิน: สมบูรณ์แบบ!</strong> ซิกาแอโรเจลน้ำหนักเบาและต้านรังสีสูงช่วยป้องกันรังสีคอสมิกและรักษาความดันบรรยากาศภายในโดมได้อย่างถาวร";
+            } else if (outcome === 'arch-incorrect') {
+                fb.className = "mt-3 p-3 rounded text-xs leading-normal border border-red-500/30 bg-red-950/20 text-red-400";
+                fb.innerHTML = "<strong>❌ การประเมิน: ล้มเหลว!</strong> โครงสร้างเหล็กต้านรังสีได้ต่ำมาก และความร้อนที่หดตัวในคืนดาวอังคารที่ติดลบรุนแรงทำให้เกิดรอยแตกร้าวเพิ่มขึ้น";
+            }
+        }
+
+        function goToAdvisorWithCareer() {
+            const matchedCareer = document.getElementById('quiz-match-name').innerText;
+            switchTab('advisor');
+            askAIConsultant(matchedCareer);
+        }
+
+        // --- MULTIVERSE CAREER SIMULATOR SELECTION & LOGIC ---
+        let activeSimLoop = null; // Store animation loop or timers
+
+        function loadCareerSim(careerId) {
+            const holder = document.getElementById('sim-main-canvas-holder');
+            const feedback = document.getElementById('sim-main-feedback');
+            const specLabel = document.getElementById('sim-main-spec');
+            const statusLabel = document.getElementById('sim-main-status');
+
+            // Clear any active loops/intervals from previous sims
+            if (activeSimLoop) {
+                clearInterval(activeSimLoop);
+                activeSimLoop = null;
+            }
+
+            feedback.classList.add('hidden');
+            statusLabel.innerText = "READY";
+            statusLabel.className = "font-mono text-[10px] text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded bg-emerald-950/20";
+
+            // Update highlighted borders of career selectors
+            const sims = ['space-lawyer', 'asteroid-miner', 'space-architect', 'astrobiologist', 'space-medicine', 'cubesat-engineer'];
+            sims.forEach(s => {
+                const btn = document.getElementById(`sim-btn-${s}`);
+                if (btn) {
+                    if (s === careerId) {
+                        btn.className = "w-full text-left p-4 rounded-xl border border-blue-500/40 bg-slate-850/80 transition-all flex items-center gap-3 group border-l-4 border-l-blue-500 shadow-lg shadow-blue-500/10";
+                    } else {
+                        btn.className = "w-full text-left p-4 rounded-xl border border-blue-500/10 bg-slate-900/40 hover:bg-slate-850/80 transition-all flex items-center gap-3 group";
+                    }
+                }
+            });
+
+            if (careerId === 'space-lawyer') {
+                specLabel.innerText = "SYS_LAW_PROTOCOL_V8 // SYNCED";
+                holder.innerHTML = `
+                    <div class="space-y-4 w-full max-w-xl text-left">
+                        <div class="flex items-center gap-2 mb-2 text-purple-400">
+                            <i data-lucide="gavel" class="w-5 h-5"></i>
+                            <span class="font-space font-bold text-sm tracking-wider uppercase">Space Contract Arbitration</span>
+                        </div>
+                        <h4 class="text-white font-bold text-base">วิกฤตความปลอดภัย สนธิสัญญาทำเหมืองแร่ดวงจันทร์</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            สมาพันธ์เอกชนสัญชาติหนึ่งได้แอบตั้งค่ายขุดเจาะแร่นิกเกิลเหลวห่างจากฐานปฏิบัติการหลักของรัฐบาลดวงจันทร์เพียง 500 เมตร ซึ่งเสี่ยงต่อปัญหาระบบคลื่นความถี่รบกวนความปลอดภัย ในฐานะนักกฎหมายอวกาศของสหประชาชาติ คุณควรแก้ปัญหานี้ตามข้อตกลง Artemis Accords อย่างไร?
+                        </p>
+                        <div class="grid grid-cols-1 gap-2 pt-3">
+                            <button onclick="handleDossierSim('lawyer', 'correct')" class="w-full text-left p-3.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-850 text-xs text-slate-300 transition-all flex items-center gap-2">
+                                <i data-lucide="shield" class="w-4 h-4 text-emerald-400 shrink-0"></i> บังคับใช้มาตรการ 'Safety Zone' เพื่อขีดเส้นจำกัดพิกัดขุดเจาะ ป้องกันอันตรายจากคลื่นความถี่รบกวน
+                            </button>
+                            <button onclick="handleDossierSim('lawyer', 'incorrect')" class="w-full text-left p-3.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-500/50 hover:bg-slate-850 text-xs text-slate-300 transition-all flex items-center gap-2">
+                                <i data-lucide="alert-triangle" class="w-4 h-4 text-red-400 shrink-0"></i> อนุญาตให้ขุดเจาะต่อไป แต่เก็บส่วนแบ่งภาษีร้อยละ 50 เพื่อนำไปพยุงงบประมาณพัฒนาสถานี
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (careerId === 'asteroid-miner') {
+                specLabel.innerText = "SYS_EXCAVATE_ENGINE // LIVE";
+                holder.innerHTML = `
+                    <div class="space-y-4 w-full max-w-xl text-left">
+                        <div class="flex items-center gap-2 mb-2 text-blue-400">
+                            <i data-lucide="drill" class="w-5 h-5"></i>
+                            <span class="font-space font-bold text-sm tracking-wider uppercase">Laser Extraction Tuning</span>
+                        </div>
+                        <h4 class="text-white font-bold text-base">ระบบยิงเลเซอร์ขุดเจาะแร่ดิบดาวเคราะห์น้อย AX-400</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            เซนเซอร์ความถี่ย่านรังสีอินฟราเรดส่งสัญญาณแจ้งว่า เปลือกด้านในของดาวเคราะห์น้อย AX-400 มีแร่แพลทินัมสะสมอยู่จำนวนมหาศาล แต่มีแก๊สไฮโดรเจนสะสมที่มีแรงดันสูงซ่อนอยู่ คุณควรปรับอัตรากำลังไฟฟ้าของระบบเลเซอร์ไปที่ค่าเท่าใดเพื่อความปลอดภัย?
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
+                            <button onclick="handleDossierSim('miner', 'low')" class="p-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-yellow-500/50 hover:bg-slate-850 text-xs text-slate-300 transition-all text-center">
+                                ระดับต่ำ (25% Power)
+                            </button>
+                            <button onclick="handleDossierSim('miner', 'correct')" class="p-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-850 text-xs text-slate-300 transition-all text-center font-bold">
+                                ระดับกลาง (65% Power)
+                            </button>
+                            <button onclick="handleDossierSim('miner', 'high')" class="p-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-500/50 hover:bg-slate-850 text-xs text-slate-300 transition-all text-center">
+                                ระดับสูงสุด (100% Power)
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (careerId === 'space-architect') {
+                specLabel.innerText = "SYS_INTEGRITY_SPECS // ACTIVE";
+                holder.innerHTML = `
+                    <div class="space-y-4 w-full max-w-xl text-left">
+                        <div class="flex items-center gap-2 mb-2 text-rose-400">
+                            <i data-lucide="home" class="w-5 h-5"></i>
+                            <span class="font-space font-bold text-sm tracking-wider uppercase">Bioclimatic Structural Patching</span>
+                        </div>
+                        <h4 class="text-white font-bold text-base">กู้คืนระบบความกดดันอากาศ โดมดาวอังคารแตกร้าว</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            พายุทรายผสมเศษหินขนาดยักษ์ได้ซัดพัดทำลายแผงกันความร้อนและชั้นเปลือกนอกของ Geodesic Dome พลเรือนพังเสียหาย ส่งผลให้เกิดรอยแตกร้าวและสูญเสียมวลความกดดันอากาศ ในฐานะสถาปนิกอวกาศ คุณควรเลือกใช้วัสดุชนิดใดเพื่อสร้างสิ่งปะรอยแผลภายนอกได้อย่างถาวร?
+                        </p>
+                        <div class="grid grid-cols-1 gap-2 pt-3">
+                            <button onclick="handleDossierSim('architect', 'correct')" class="w-full text-left p-3.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-850 text-xs text-slate-300 transition-all flex items-center gap-2">
+                                <i data-lucide="boxes" class="w-4 h-4 text-emerald-400 shrink-0"></i> แผ่นวัสดุคอมโพสิต 'แอโรเจลซิลิกา' และคาร์บอนนาโนทูบเพื่อป้องกันความเย็นและกรองรังสีสากล
+                            </button>
+                            <button onclick="handleDossierSim('architect', 'incorrect')" class="w-full text-left p-3.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-500/50 hover:bg-slate-850 text-xs text-slate-300 transition-all flex items-center gap-2">
+                                <i data-lucide="boxes" class="w-4 h-4 text-red-400 shrink-0"></i> ผนังเหล็กกล้าคาร์บอนไฟเบอร์ผสมอะลูมิเนียมชุบเพื่อความแข็งแกร่งสูงสุดในราคาประหยัด
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (careerId === 'astrobiologist') {
+                specLabel.innerText = "SYS_BIO_SENSE_V1.2 // SYNCED";
+                holder.innerHTML = `
+                    <div class="space-y-4 w-full max-w-xl text-left">
+                        <div class="flex items-center gap-2 mb-2 text-emerald-400">
+                            <i data-lucide="microscope" class="w-5 h-5"></i>
+                            <span class="font-space font-bold text-sm tracking-wider uppercase">Microbial Extreme Cultivation</span>
+                        </div>
+                        <h4 class="text-white font-bold text-base">การเพาะเลี้ยงจุลชีพทนทานสภาวะอวกาศสุดขั้ว</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            คุณกำลังค้นคว้าจุลินทรีย์ทนทานรังสีคอสมิกประเภท 'Deinococcus radiodurans' ในตู้จำลองแรงดันอวกาศ และต้องการกระตุ้นกระบวนการยืดเกาะสาย DNA เพื่อให้พวกมันสังเคราะห์สารสกัดยารักษามะเร็งได้ดีขึ้น คุณควรเลือกตัวกระตุ้นปฏิกิริยาเคมีประเภทใด?
+                        </p>
+                        <div class="grid grid-cols-1 gap-2 pt-3">
+                            <button onclick="handleDossierSim('biologist', 'correct')" class="w-full text-left p-3.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-850 text-xs text-slate-300 transition-all flex items-center gap-2">
+                                <i data-lucide="dna" class="w-4 h-4 text-emerald-400 shrink-0"></i> กระตุ้นด้วยสารละลายแคลเซียมคาร์บอเนตผสมสารอาหารเพื่อกระตุ้นผนังเซลล์ชีวภาพให้แข็งแกร่ง
+                            </button>
+                            <button onclick="handleDossierSim('biologist', 'incorrect')" class="w-full text-left p-3.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-500/50 hover:bg-slate-850 text-xs text-slate-300 transition-all flex items-center gap-2">
+                                <i data-lucide="flame" class="w-4 h-4 text-red-400 shrink-0"></i> ฉีดกรดไนตริกเข้มข้นเพื่อฆ่าเชื้อแบคทีเรียแปลกปลอมในตู้ทดลอง
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (careerId === 'space-medicine') {
+                specLabel.innerText = "SYS_MED_DIAGNOSE // ACTIVE";
+                holder.innerHTML = `
+                    <div class="space-y-4 w-full max-w-xl text-left">
+                        <div class="flex items-center gap-2 mb-2 text-pink-400">
+                            <i data-lucide="heart-pulse" class="w-5 h-5"></i>
+                            <span class="font-space font-bold text-sm tracking-wider uppercase">Astronaut Vital Diagnosis</span>
+                        </div>
+                        <h4 class="text-white font-bold text-base">ระบบฟื้นฟูมวลกระดูกฝ่อในแรงโน้มถ่วงต่ำ</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            กัปตันทีมนักบินอวกาศเพิ่งเสร็จสิ้นภารกิจสืบสวนอวกาศลึกระยะเวลา 9 เดือน มีภาวะมวลกระดูก (Bone Density) ลดลงร้อยละ 15 และกล้ามเนื้อลีบแบนเนื่องจากขาดแรงต้านสากล ในฐานะแพทย์อวกาศประจำฐาน คุณควรเลือกวิธีรักษาบำบัดฟื้นฟูข้อใดดีที่สุด?
+                        </p>
+                        <div class="grid grid-cols-1 gap-2 pt-3">
+                            <button onclick="handleDossierSim('medicine', 'correct')" class="w-full text-left p-3.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-850 text-xs text-slate-300 transition-all flex items-center gap-2">
+                                <i data-lucide="heart" class="w-4 h-4 text-emerald-400 shrink-0"></i> สั่งยาบิสฟอสโฟเนตเสริมด้วยแคลเซียม พร้อมกำหนดตารางเวตเทรนนิ่งในโซนความดันแรงโน้มถ่วงเทียม 1G
+                            </button>
+                            <button onclick="handleDossierSim('medicine', 'incorrect')" class="w-full text-left p-3.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-500/50 hover:bg-slate-850 text-xs text-slate-300 transition-all flex items-center gap-2">
+                                <i data-lucide="activity" class="w-4 h-4 text-red-400 shrink-0"></i> ฉีดฮอร์โมนนอนหลับให้พักผ่อนยาวบนเปลสนามแบบไร้แรงโน้มถ่วงเป็นเวลา 3 สัปดาห์
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else if (careerId === 'cubesat-engineer') {
+                specLabel.innerText = "SYS_CUBESAT_TELEMETRY // SYNCED";
+                holder.innerHTML = `
+                    <div class="space-y-4 w-full max-w-xl text-left">
+                        <div class="flex items-center gap-2 mb-2 text-cyan-400">
+                            <i data-lucide="cpu" class="w-5 h-5"></i>
+                            <span class="font-space font-bold text-sm tracking-wider uppercase">Array Deployment Tuning</span>
+                        </div>
+                        <h4 class="text-white font-bold text-base">วิกฤตแผงโซลาร์เซลล์ดาวเทียม CubeSat ไม่ยอมกางออก</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            ดาวเทียมขนาดจิ๋วประเภท CubeSat โคจรผ่านเขตชั้นบรรยากาศหนาวจัดของโลก แผงรับพลังงานโซลาร์เซลล์เกิดอาการติดขัดไม่ยอมกางออกตามคำสั่งหลัก คุณควรส่งรหัสคำสั่งแก้ปัญหา (Recovery Commands) ประเภทใดขึ้นไปควบคุม?
+                        </p>
+                        <div class="grid grid-cols-1 gap-2 pt-3">
+                            <button onclick="handleDossierSim('cubesat', 'correct')" class="w-full text-left p-3.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-850 text-xs text-slate-300 transition-all flex items-center gap-2">
+                                <i data-lucide="zap" class="w-4 h-4 text-emerald-400 shrink-0"></i> ส่งสัญญาณคำสั่งย่อย 'Thermal Deployment Actuation' เพื่ออุ่นบานพับให้คลายความเย็นสะสม
+                            </button>
+                            <button onclick="handleDossierSim('cubesat', 'incorrect')" class="w-full text-left p-3.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-500/50 hover:bg-slate-850 text-xs text-slate-300 transition-all flex items-center gap-2">
+                                <i data-lucide="power" class="w-4 h-4 text-red-400 shrink-0"></i> สั่งการฟอร์แมตหน่วยความจำภายนอก (Hard Reset) ของดาวเทียมขณะโคจรลอยตัว
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        function handleDossierSim(role, state) {
+            const feedback = document.getElementById('sim-main-feedback');
+            const statusLabel = document.getElementById('sim-main-status');
+
+            feedback.classList.remove('hidden');
+
+            if (state === 'correct') {
+                statusLabel.innerText = "SUCCESS";
+                statusLabel.className = "font-mono text-[10px] text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded bg-emerald-950/20";
+                
+                if (role === 'lawyer') {
+                    feedback.innerHTML = `
+                        <div class="text-emerald-400 font-bold mb-1 flex items-center gap-1"><i data-lucide="check-circle" class="w-4 h-4"></i> ประเมินผลงาน: ผ่านภารกิจ!</div>
+                        <p class="text-xs text-slate-400">คุณสามารถบังคับใช้พื้นที่เขตปลอดภัยทางดาราศาสตร์ได้สำเร็จตามหลักกฎหมายสากล สัญญา Artemis ข้อที่ 9 ช่วยรักษาเสถียรภาพคลื่นความถี่สื่อสารและหลีกเลี่ยงสงครามแย่งชิงแร่ธาตุกับภาคเอกชนได้อย่างยอดเยี่ยม!</p>
+                    `;
+                } else if (role === 'miner') {
+                    feedback.innerHTML = `
+                        <div class="text-emerald-400 font-bold mb-1 flex items-center gap-1"><i data-lucide="check-circle" class="w-4 h-4"></i> ประเมินผลงาน: ผ่านภารกิจ!</div>
+                        <p class="text-xs text-slate-400">กำลังเลเซอร์ระดับปานกลาง (65%) เผาชั้นเปลือกหินแร่เหล็กนิกเกิลและสกัดแพลทินัมบริสุทธิ์ออกมากองรวมกันได้อย่างงดงามโดยไม่กระตุ้นให้แก๊สไฮโดรเจนสะสมเกิดแรงระเบิดปะทุขึ้นมา!</p>
+                    `;
+                } else if (role === 'architect') {
+                    feedback.innerHTML = `
+                        <div class="text-emerald-400 font-bold mb-1 flex items-center gap-1"><i data-lucide="check-circle" class="w-4 h-4"></i> ประเมินผลงาน: ผ่านภารกิจ!</div>
+                        <p class="text-xs text-slate-400">คอมโพสิตของแอโรเจลซิลิกามีน้ำหนักมวลเบา ต้านแรงดันได้มหาศาลและกรองรังสีคอสมิกได้ดีเลิศ รอยรั่วของโดมจำลองดาวอังคารถูกปิดกักเก็บความดันอุณหภูมิได้อย่างคงทนถาวร!</p>
+                    `;
+                } else if (role === 'biologist') {
+                    feedback.innerHTML = `
+                        <div class="text-emerald-400 font-bold mb-1 flex items-center gap-1"><i data-lucide="check-circle" class="w-4 h-4"></i> ประเมินผลงาน: ผ่านภารกิจ!</div>
+                        <p class="text-xs text-slate-400">กระบวนการเติมโมเลกุลสารอาหารแคลเซียมคาร์บอเนตช่วยกระตุ้นการสร้างเกราะผนังเซลล์ชีวภาพให้แข็งแกร่ง พวกมันสลายรังสีและเติบโตเพื่อสร้างยารักษาระดับพรีเมียมให้พลเรือนได้สำเร็จ!</p>
+                    `;
+                } else if (role === 'medicine') {
+                    feedback.innerHTML = `
+                        <div class="text-emerald-450 font-bold mb-1 flex items-center gap-1"><i data-lucide="check-circle" class="w-4 h-4"></i> ประเมินผลงาน: ผ่านภารกิจ!</div>
+                        <p class="text-xs text-slate-400">การบำบัดด้วยบิสฟอสโฟเนตควบคู่กับการออกกำลังกายในระบบความกดดันอากาศจำลอง 1G สามารถเสริมสร้างความมั่นคงของเซลล์กระดูกและลดการสลายตัวของกล้ามเนื้อนักบินให้ฟื้นฟูกลับมาสมบูรณ์ใน 2 สัปดาห์!</p>
+                    `;
+                } else if (role === 'cubesat') {
+                    feedback.innerHTML = `
+                        <div class="text-emerald-400 font-bold mb-1 flex items-center gap-1"><i data-lucide="check-circle" class="w-4 h-4"></i> ประเมินผลงาน: ผ่านภารกิจ!</div>
+                        <p class="text-xs text-slate-400">การส่งคำสั่งเพิ่มระดับความร้อนที่บานพับช่วยละลายคราบน้ำแข็งและคลายการยึดเกาะได้ แผงโซลาร์เซลล์กางออกรับไอแสงแดดและเริ่มส่งสัญญาณข้อมูลสภาพอวกาศกลับมายังสถานีตรวจวัดแล้ว!</p>
+                    `;
+                }
+            } else if (state === 'low') {
+                statusLabel.innerText = "WARNING_POWER_LOW";
+                statusLabel.className = "font-mono text-[10px] text-yellow-400 border border-yellow-500/30 px-2 py-0.5 rounded bg-yellow-950/20";
+                feedback.innerHTML = `
+                    <div class="text-yellow-400 font-bold mb-1 flex items-center gap-1"><i data-lucide="alert-triangle" class="w-4 h-4"></i> ประเมินผลงาน: พลังงานไม่เพียงพอ!</div>
+                    <p class="text-xs text-slate-400">กำลังไฟของระบบเลเซอร์ระดับต่ำ (25%) ไม่แรงพอที่จะเจาะผ่านเกราะชั้นนอกของดาวเคราะห์น้อยที่มีความเข้มข้นหนาได้สำเร็จก่อนที่พิกัดโคจรจะคลาดเคลื่อนลอยตัวหนีออกไป</p>
+                `;
+            } else {
+                statusLabel.innerText = "FAILED_CRITICAL";
+                statusLabel.className = "font-mono text-[10px] text-red-500 border border-red-500/30 px-2 py-0.5 rounded bg-red-950/20";
+                
+                if (role === 'lawyer') {
+                    feedback.innerHTML = `
+                        <div class="text-red-400 font-bold mb-1 flex items-center gap-1"><i data-lucide="x-circle" class="w-4 h-4"></i> ประเมินผลงาน: ล้มเหลว!</div>
+                        <p class="text-xs text-slate-400">การละเลยกฎระเบียบของ Artemis Accords และเรียกเก็บภาษีส่วนตัว ถือเป็นการฝ่าฝืนสนธิสัญญาอวกาศสากล นำไปสู่ข้อพิพาทความตึงเครียดด้านอธิปไตยนอกโลกและการระงับสิทธิ์สื่อสารทางวิทยุ!</p>
+                    `;
+                } else if (role === 'miner') {
+                    feedback.innerHTML = `
+                        <div class="text-red-400 font-bold mb-1 flex items-center gap-1"><i data-lucide="x-circle" class="w-4 h-4"></i> ประเมินผลงาน: ล้มเหลว!</div>
+                        <p class="text-xs text-slate-400">พลังเลเซอร์สูงจัดเหนี่ยวนำให้แก๊สไฮโดรเจนแรงดันสูงภายในชั้นใต้เปลือกหินเกิดการระเบิดครั้งใหญ่อย่างรุนแรง ส่งผลให้ดาวเคราะห์น้อย AX-400 แตกสลายกลายเป็นขยะอวกาศที่เป็นอันตราย!</p>
+                    `;
+                } else if (role === 'architect') {
+                    feedback.innerHTML = `
+                        <div class="text-red-400 font-bold mb-1 flex items-center gap-1"><i data-lucide="x-circle" class="w-4 h-4"></i> ประเมินผลงาน: ล้มเหลว!</div>
+                        <p class="text-xs text-slate-400">แผ่นโลหะเหล็กคาร์บอนธรรมดาสูญเสียคุณสมบัติยืดหยุ่นในอุณหภูมิติดลบรุนแรงตอนกลางคืนของดาวอังคาร รอยปะเกิดการฉีกขาดแตกร้าวรุนแรงกว่าเก่า และปล่อยรังสีคอสโมผ่านเข้าสู่ห้องพักอาศัย!</p>
+                    `;
+                } else if (role === 'biologist') {
+                    feedback.innerHTML = `
+                        <div class="text-red-400 font-bold mb-1 flex items-center gap-1"><i data-lucide="x-circle" class="w-4 h-4"></i> ประเมินผลงาน: ล้มเหลว!</div>
+                        <p class="text-xs text-slate-400">กรดไนตริกที่รุนแรงทำลายล้างชีวมวลและสลายห่วงโซ่โมเลกุลโปรตีนของจุลินทรีย์จนหมดสิ้น ห้องทดลองกลายสภาพเป็นเขตว่างเปล่าปราศจากสิ่งมีชีวิตทดสอบ!</p>
+                    `;
+                } else if (role === 'medicine') {
+                    feedback.innerHTML = `
+                        <div class="text-red-400 font-bold mb-1 flex items-center gap-1"><i data-lucide="x-circle" class="w-4 h-4"></i> ประเมินผลงาน: ล้มเหลว!</div>
+                        <p class="text-xs text-slate-400">การให้พักผ่อนนอนหลับต่อเนื่องในสภาพสภาวะไร้แรงโน้มถ่วง มีผลทำให้อัตราความสลายตัวของมวลกระดูกและกล้ามเนื้อของผู้ป่วยฝ่อตัวเพิ่มขึ้นอีกร้อยละ 5 ส่งผลเสียต่อระบบหลอดเลือดหัวใจ!</p>
+                    `;
+                } else if (role === 'cubesat') {
+                    feedback.innerHTML = `
+                        <div class="text-red-400 font-bold mb-1 flex items-center gap-1"><i data-lucide="x-circle" class="w-4 h-4"></i> ประเมินผลงาน: ล้มเหลว!</div>
+                        <p class="text-xs text-slate-400">การส่งคำสั่งรีเซ็ตระบบปฏิบัติการหลัก (Hard Reset) ขณะดาวเทียมอยู่ในพิกัดขั้วโลกหนาวจัด ทำให้ระบบซอฟต์แวร์นำทางดับตัวถาวรเนื่องจากแบตเตอรี่สูญเสียระดับกระแสไปกับอากาศหนาวเย็น!</p>
+                    `;
+                }
+            }
+            lucide.createIcons();
+        }
+
+        // --- STARRY BACKGROUND ANIMATION (BACKGROUND CANVAS) ---
+        let starfieldCanvas, starfieldCtx;
+        let stars = [];
+        let mouseX = 0;
+        let mouseY = 0;
+
+        function initStarfield() {
+            starfieldCanvas = document.getElementById('starfield');
+            starfieldCtx = starfieldCanvas.getContext('2d');
+            
+            resizeStarfieldCanvas();
+            
+            // Build advanced multi-layered astronomical space environment
+            stars = [];
+            const numStars = 250; // High fidelity star count
+            
+            for (let i = 0; i < numStars; i++) {
+                stars.push({
+                    x: Math.random() * starfieldCanvas.width,
+                    y: Math.random() * starfieldCanvas.height,
+                    radius: Math.random() * 1.8 + 0.3, // Deep space variety sizes
+                    opacity: Math.random() * 0.9 + 0.1,
+                    speed: Math.random() * 0.12 + 0.02,
+                    layer: Math.floor(Math.random() * 3) + 1, // Depth layers
+                    color: i % 10 === 0 ? 'rgba(173, 216, 230, opacity)' : (i % 15 === 0 ? 'rgba(255, 182, 193, opacity)' : 'rgba(255, 255, 255, opacity)')
+                });
+            }
+
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            // Realistic moving nebulas & starry cosmic void loop
+            function animateStars() {
+                // Fill space void black with subtle atmospheric glow refresh
+                starfieldCtx.fillStyle = 'rgba(1, 2, 6, 0.25)'; // Motion blur trail
+                starfieldCtx.fillRect(0, 0, starfieldCanvas.width, starfieldCanvas.height);
+
+                // Draw deep space nebulous cosmic dust clouds
+                drawNebulaDust(starfieldCtx, starfieldCanvas.width, starfieldCanvas.height);
+
+                stars.forEach(star => {
+                    // Drift stars at speeds relative to distance layers
+                    star.y -= star.speed * (star.layer * 0.5);
+                    if (star.y < 0) {
+                        star.y = starfieldCanvas.height;
+                        star.x = Math.random() * starfieldCanvas.width;
+                    }
+
+                    // Mouse interaction repel force (High-tech responsive warp)
+                    const dx = star.x - mouseX;
+                    const dy = star.y - mouseY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    let ox = 0;
+                    let oy = 0;
+                    if (dist < 150) {
+                        const force = (150 - dist) / 150;
+                        ox = (dx / dist) * force * (star.layer * 4);
+                        oy = (dy / dist) * force * (star.layer * 4);
+                    }
+
+                    // Gentle realistic twinkle pulse
+                    let pulse = Math.sin(Date.now() * 0.0015 + star.radius * 20) * 0.25;
+                    let alpha = Math.max(0.1, Math.min(1.0, star.opacity + pulse));
+
+                    starfieldCtx.fillStyle = star.color.replace('opacity', alpha);
+                    starfieldCtx.beginPath();
+                    starfieldCtx.arc(star.x + ox, star.y + oy, star.radius * (1 + pulse * 0.2), 0, Math.PI * 2);
+                    starfieldCtx.fill();
+                });
+
+                requestAnimationFrame(animateStars);
+            }
+            animateStars();
+        }
+
+        // Realistic Cosmic Nebula dust drawing method
+        function drawNebulaDust(ctx, w, h) {
+            ctx.save();
+            ctx.globalCompositeOperation = 'screen';
+            
+            // Nebula 1: Mysterious Violet
+            const grad1 = ctx.createRadialGradient(w * 0.2, h * 0.3, 0, w * 0.2, h * 0.3, w * 0.4);
+            grad1.addColorStop(0, 'rgba(139, 92, 246, 0.04)');
+            grad1.addColorStop(0.5, 'rgba(168, 85, 247, 0.02)');
+            grad1.addColorStop(1, 'transparent');
+            ctx.fillStyle = grad1;
+            ctx.fillRect(0, 0, w, h);
+
+            // Nebula 2: Deep Blue Void Aura
+            const grad2 = ctx.createRadialGradient(w * 0.8, h * 0.7, 0, w * 0.8, h * 0.7, w * 0.5);
+            grad2.addColorStop(0, 'rgba(59, 130, 246, 0.05)');
+            grad2.addColorStop(0.6, 'rgba(30, 58, 138, 0.01)');
+            grad2.addColorStop(1, 'transparent');
+            ctx.fillStyle = grad2;
+            ctx.fillRect(0, 0, w, h);
+
+            // Nebula 3: Cosmic Teal Glow
+            const grad3 = ctx.createRadialGradient(w * 0.5, h * 0.5, 0, w * 0.5, h * 0.5, w * 0.3);
+            grad3.addColorStop(0, 'rgba(13, 148, 136, 0.03)');
+            grad3.addColorStop(1, 'transparent');
+            ctx.fillStyle = grad3;
+            ctx.fillRect(0, 0, w, h);
+
+            ctx.restore();
+        }
+
+        function resizeStarfieldCanvas() {
+            if (!starfieldCanvas) return;
+            starfieldCanvas.width = window.innerWidth;
+            starfieldCanvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', () => {
+            resizeStarfieldCanvas();
+        });
+
+
+        // --- GEMINI AI CHAT INTEGRATION ---
+        let chatMessages = [
+            { role: 'model', text: 'สวัสดีครับ! ยินดีต้อนรับสู่ศูนย์บริการแนะแนวอาชีพอวกาศ AstroPath ผมคือ AI ที่ปรึกษาที่จะช่วยค้นหาทักษะ ตอบข้อสงสัย เจาะลึกสายวิชาเรียนเพื่อความฝันอวกาศของคุณ ถามคำถามของคุณได้เลย!' }
+        ];
+
+        function clearChatHistory() {
+            chatMessages = [
+                { role: 'model', text: 'ประวัติการแชตถูกล้างแล้วครับ สอบถามความรู้เรื่องการวางแผนเรียนต่อด้านอวกาศได้เลย!' }
+            ];
+            renderChatMessages();
+        }
+
+        function askAIConsultant(topic) {
+            switchTab('advisor');
+            const promptText = `แนะนำรายละเอียดเชิงลึกเกี่ยวกับสายการเรียน ทักษะที่ควรสะสม และคุณสมบัติในการทำงานสำหรับอาชีพ: ${topic} ในสไตล์ที่เข้าใจง่าย สร้างแรงบันดาลใจ และบอกแนวทางในชีวิตจริง`;
+            
+            document.getElementById('chat-text-input').value = promptText;
+            document.getElementById('chat-input-form').dispatchEvent(new Event('submit'));
+        }
+
+        async function handleSendChat(e) {
+            e.preventDefault();
+            const inputField = document.getElementById('chat-text-input');
+            const messageText = inputField.value.trim();
+            if (!messageText) return;
+
+            chatMessages.push({ role: 'user', text: messageText });
+            inputField.value = '';
+            renderChatMessages();
+
+            addTypingIndicator();
+
+            try {
+                const aiResponseText = await getGeminiResponse(messageText);
+                removeTypingIndicator();
+                chatMessages.push({ role: 'model', text: aiResponseText });
+                renderChatMessages();
+            } catch (err) {
+                removeTypingIndicator();
+                chatMessages.push({ role: 'model', text: 'ขออภัยด้วยครับ ระบบประมวลผลการจำลอง AI เกิดข้อผิดพลาดชั่วคราวในการตอบคำถาม กรุณาลองตรวจสอบอีกครั้งภายหลัง' });
+                renderChatMessages();
+            }
+        }
+
+        function renderChatMessages() {
+            const container = document.getElementById('chat-messages-container');
+            container.innerHTML = '';
+
+            chatMessages.forEach(msg => {
+                const row = document.createElement('div');
+                const isAI = msg.role === 'model';
+                
+                row.className = `flex items-start gap-3 ${isAI ? '' : 'flex-row-reverse'}`;
+
+                let iconMarkup = '';
+                if (isAI) {
+                    iconMarkup = `
+                        <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0 shadow-sm">
+                            <i data-lucide="bot" class="w-4 h-4"></i>
+                        </div>
+                    `;
+                } else {
+                    iconMarkup = `
+                        <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0 shadow-sm">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                        </div>
+                    `;
+                }
+
+                const labelText = isAI ? 'AstroPath AI' : 'คุณ';
+                const messageBgClass = isAI 
+                    ? 'bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none text-slate-200' 
+                    : 'bg-gradient-to-tr from-blue-900 to-indigo-950 border border-blue-500/20 rounded-2xl rounded-tr-none text-white';
+
+                row.innerHTML = `
+                    ${iconMarkup}
+                    <div class="space-y-1.5 max-w-[85%]">
+                        <div class="${messageBgClass} p-4 text-sm leading-relaxed shadow-sm whitespace-pre-line">
+                            ${msg.text}
+                        </div>
+                        <span class="text-[10px] text-slate-600 font-mono block ${isAI ? 'pl-2' : 'pr-2 text-right'}">${labelText}</span>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+
+            lucide.createIcons();
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function addTypingIndicator() {
+            const container = document.getElementById('chat-messages-container');
+            const row = document.createElement('div');
+            row.id = 'typing-indicator-row';
+            row.className = 'flex items-start gap-3';
+            row.innerHTML = `
+                <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
+                    <i data-lucide="bot" class="w-4 h-4"></i>
+                </div>
+                <div class="space-y-1.5 max-w-[85%]">
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none p-4 text-sm flex items-center justify-center min-w-[80px] h-[48px]">
+                        <div class="dot-flashing"></div>
+                    </div>
+                    <span class="text-[10px] text-slate-600 font-mono block pl-2">AstroPath AI กำลังคำนวณ...</span>
+                </div>
+            `;
+            container.appendChild(row);
+            lucide.createIcons();
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator-row');
+            if (indicator) indicator.remove();
+        }
+
+        async function getGeminiResponse(userQuery) {
+            let historyPrompt = "";
+            const limitedHistory = chatMessages.slice(-6);
+            limitedHistory.forEach(msg => {
+                historyPrompt += `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.text}\n`;
+            });
+            
+            const systemPrompt = `คุณคือ AstroPath AI ที่ปรึกษาแนะแนวการเรียนต่อและสร้างทักษะทางดาราศาสตร์ ฟิสิกส์ และอาชีพอวกาศแห่งอนาคต (เช่น สถาปนิกอวกาศ แพทย์อวกาศ วิศวกร CubeSat) 
+ตอบคำถามด้วยน้ำเสียงที่เป็นมิตร มีพลัง สร้างแรงบันดาลใจ และให้คำแนะนำที่สามารถทำได้จริง มีลำดับขั้นตอน (Roadmap) ชัดเจน 
+เน้นย้ำถึงบทบาทวิชาเรียน เช่น ฟิสิกส์ ดาราศาสตร์ คอมพิวเตอร์ คณิตศาสตร์ และวิศวกรรมศาสตร์ ในการแก้ไขโจทย์ยากนอกโลก และเขียนเป็นภาษาไทยอย่างถูกต้องสลวย`;
+
+            const payload = {
+                contents: [{ parts: [{ text: historyPrompt }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            let retries = 5;
+            let delay = 1000;
+
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(endpoint, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        const answer = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                        if (answer) return answer;
+                    }
+                } catch (e) {
+                }
+                
+                if (i < retries - 1) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2;
+                }
+            }
+
+            return generateMockSpaceResponse(userQuery);
+        }
+
+        function generateMockSpaceResponse(query) {
+            const lowerQuery = query.toLowerCase();
+            if (lowerQuery.includes('กฎหมาย') || lowerQuery.includes('space lawyer')) {
+                return `**กฎหมายอวกาศ (Space Law)** เป็นอาชีพที่เจ๋งและต้องการตัวมากในอนาคตครับ! ⚖️🌌\n\nเมื่อบริษัทเอกชนเริ่มส่งแร่กลับมาจากดวงจันทร์และดาวเคราะห์น้อย ข้อพิพาทเรื่องดินแดนและลิขสิทธิ์จะเริ่มเกิดขึ้นอย่างแน่นอน\n\n**วิชาเรียนที่ควรเน้น:**\n1. นิติศาสตร์ (กฎหมายเปรียบเทียบและกฎหมายระหว่างประเทศ)\n2. ภาษาอังกฤษ/ภาษาที่สาม (สำหรับการเจรจาระดับพหุภาคี)\n3. ดาราศาสตร์พื้นฐาน (เพื่อเข้าใจเทคโนโลยีและขอบเขตอวกาศ)\n\n**แผนการศึกษา (Roadmap):**\n- **ม.ปลาย:** เน้นวิชาด้านภาษา สังคม และรัฐศาสตร์\n- **ป.ตรี:** คณะนิติศาสตร์ เน้นกฎหมายทรัพย์สินทางปัญญาและนิติกรรมการค้าระหว่างประเทศ\n- **ป.โท:** ศึกษาต่อเฉพาะทางในสถาบันต่างประเทศที่มีหลักสูตร *Air and Space Law* (เช่น มหาวิทยาลัย Leiden ในเนเธอร์แลนด์ หรือ McGill ในแคนาดา)\n\nถ้าคุณมีข้อสงสัยเพิ่มเติมเรื่องสถาบันหรือเทคโนโลยีเฉพาะ สามารถพิมพ์ถามคุยต่อได้เลยครับ!`;
+            } else if (lowerQuery.includes('แพทย์') || lowerQuery.includes('หมอ') || lowerQuery.includes('space medicine')) {
+                return `**แพทย์อวกาศ (Space Medicine Specialist)** เป็นผู้ดูแลความปลอดภัยและรักษาร่างกายของเพื่อนมนุษย์ในสภาพแวดล้อมสุดขั้วครับ! 🩺🚀\n\nหน้าที่หลักคือตรวจวัด มวลกระดูกที่ลดลงจากสภาวะแรงโน้มถ่วงต่ำ การกลายพันธุ์ของเซลล์จากรังสี และการบำบัดสุขภาพจิตของลูกเรือที่ต้องอยู่จำกัดพื้นที่\n\n**วิชาเรียนที่ควรเน้น:**\n1. ชีววิทยาและสรีรวิทยา of Human\n2. เคมี และ เทคโนโลยีทางการแพทย์\n3. ฟิสิกส์พื้นฐาน (เพื่อศึกษาแรงโน้มถ่วงจำลอง)\n\n**แผนการทำงาน:**\n- เรียนจบหลักสูตร **แพทยศาสตรบัณฑิต (พ.บ.)**\n- ศึกษาต่อด้านเฉพาะทางในสาขา **เวชศาสตร์การบิน (Aerospace Medicine)** หรือเวชศาสตร์ความกดดันสูง\n- ร่วมวิจัยกับองค์การอวกาศ เช่น โครงการปล่อยจรวดของยุโรป หรือเอเชียแปซิฟิก\n\nต้องการให้ผมแนะนำข้อมูลการรักษาสภาวะกระดูกฝ่อเพิ่มเติมไหมครับ? พิมพ์ถามมาได้เลย!`;
+            } else if (lowerQuery.includes('สถาปนิก') || lowerQuery.includes('space architect')) {
+                return `**สถาปนิกอวกาศ (Space Architect)** เป็นการผสมผสานสุดยอดระหว่างศาสตร์การออกแบบและฟิสิกส์วัสดุศาสตร์ครับ! 🏠🪐\n\nคุณจะไม่ได้ออกแบบแค่ห้องที่สวยงาม แต่จะออกแบบโครงสร้างเกราะสะท้อนรังสีคอสมิก และระบบจำลองแรงดันบรรยากาศ 1 atm เพื่อช่วยให้ชีวิตมนุษย์อยู่รอดบนดาวอังคารได้\n\n**ทักษะที่ต้องเน้นย้ำ:**\n- สถาปัตยกรรมศาสตร์และการคำนวณโครงสร้างแบบ 3D\n- ฟิสิกส์และวิทยาศาสตร์วัสดุศาสตร์ (เช่น การใช้วัสดุรีไซเคิลและดินดาวอังคารมาทำคอนกรีตสามมิติ)\n- จิตวิทยาความมั่นคงด้านพื้นที่ (Human Factors & Ergonomics)\n\n**แนวทางการเรียนรู้:**\n- เรียนจบคณะสถาปัตยกรรมศาสตร์\n- อบรมสถาปัตยกรรมสภาพแวดล้อมสุดขั้ว หรือศึกษาเพิ่มเติมเรื่องวิทยาศาสตร์อวกาศและวัสดุผสม\n\nถามข้อมูลเรื่องเทคนิคการพิมพ์ 3 มิติบนอวกาศเพิ่มเติมได้เสมอนะครับ!`;
+            } else if (lowerQuery.includes('ดาวเทียม') || lowerQuery.includes('cubesat')) {
+                return `**วิศวกรดาวเทียมขนาดเล็ก (CubeSat Engineer)** คือฮีโร่ผู้เบิกทางให้เทคโนโลยีสื่อสารและภาพถ่ายโลกยุคใหม่! 🛰️💻\n\nดาวเทียมในปัจจุบันไม่ได้มีขนาดเท่ารถยนต์อีกต่อไป แต่มีขนาดเล็กเท่ากล่องนม (CubeSat) ซึ่งทำหน้าที่เก็บข้อมูลพายุ พยากรณ์อากาศ หรืออินเทอร์เน็ตบรอดแบนด์\n\n**ทักษะสำคัญในการฝึกฝน:**\n- **Embedded Systems & coding:** ภาษา C/C++, Python สำหรับระบบนำทางและรับส่งข้อมูลไมโครคอนโทรลเลอร์\n- **วิศวกรรมไฟฟ้า:** การประหยัดพลังงาน แบตเตอรี่ และแผงเซลล์แสงอาทิตย์ในสภาวะอุณหภูมิสลับขั้วสุดขีด\n- **วิศวกรรมการบิน:** พลศาสตร์การโคจรและการคำนวณการยึดเกาะสายส่งสัญญาณ\n\n**แผนการศึกษา:**\n- เรียนวิศวกรรมคอมพิวเตอร์, ไฟฟ้า, หรือวิศวกรรมการบินและอวกาศ\n- เข้าร่วมโครงการจัดทำ CubeSat ของมหาวิทยาลัย ซึ่งปัจจุบันไทยมีโครงการกลุ่มนี้ค่อนภาพรวมค่อนข้างแพร่หลายครับ!`;
+            }
+            
+            return `คำถามของคุณเกี่ยวกับการสำรวจและเตรียมพร้อมสายงานด้าน "${query}" มีความน่าสนใจเป็นอย่างยิ่งในยุคอุตสาหกรรมอวกาศใหม่นี้ครับ!\n\nในการเข้าสู่วงการอวกาศ ปัจจัยหลักที่ต้องการคือ **ทักษะข้ามสายงาน (Interdisciplinary Skills)** ตัวอย่างเช่น หากคุณเป็นนักโปรแกรมเมอร์ คุณจะต้องการเขียนโค้ดที่ทนทานต่อรังสีที่ทำให้บิตผกผัน (Bit-flip) หรือหากคุณเป็นนักเศรษฐศาสตร์ คุณจะออกแบบตลาดซื้อขายกรรมสิทธิ์พลังงานนอกโลก\n\n**คำแนะนำสำหรับก้าวแรก:**\n1. มุ่งเน้นสร้างพื้นฐานทางฟิสิกส์ ดาราศาสตร์ หรือคณิตศาสตร์ให้ประยุกต์ใช้กับโจทย์จริงได้\n2. เข้าไปมีส่วนร่วมในโครงการพัฒนาหรือเว็บล็อกต่างประเทศที่มีการปล่อยโมเดลให้ทดลองซ้อมโปรแกรม\n3. ค้นคว้าหาบทบาทเฉพาะตัวที่คุณมีความถนัดสูงสุดและปรับให้เข้ากับกลไกแรงโน้มถ่วงต่าง ๆ\n\nคุณสนใจข้อมูลการวางแผนเรียนต่อระดับมหาวิทยาลัยในประเทศหรือต่างประเทศเป็นพิเศษไหมครับ? สามารถถามเจาะลึกเพิ่มได้ทันทีเลยครับ!`;
+        }
+    </script>
+</body>
+</html>
